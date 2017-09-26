@@ -7,7 +7,6 @@ import LoginButtonContainer from './user/ui/loginbutton/LoginButtonContainer'
 import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
 
 // Styles
-import './css/oswald.css'
 import './css/open-sans.css'
 import './css/pure-min.css'
 import './App.css'
@@ -28,6 +27,9 @@ class App extends Component {
 
     const OnlyGuestLinks = HiddenOnlyAuth(() =>
       <span>
+        <li className="pure-menu-item">
+          <Link to="/truffle" className="pure-menu-link">truffle</Link>
+        </li>
         <LoginButtonContainer />
       </span>
     )
@@ -35,7 +37,7 @@ class App extends Component {
     return (
       <div className="App">
         <nav className="navbar pure-menu pure-menu-horizontal">
-          <Link to="/" className="pure-menu-heading pure-menu-link">Truffle Box</Link>
+          <Link to="/" className="pure-menu-heading pure-menu-link">Daohaus</Link>
           <ul className="pure-menu-list navbar-right">
             <OnlyGuestLinks />
             <OnlyAuthLinks />

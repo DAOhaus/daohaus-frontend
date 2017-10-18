@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import HubJson from '../../../build/contracts/Hub.json'
 const Web3 = require("web3");
+import HubJson from '../../../build/contracts/Hub.json'
 const truffleContract = require("truffle-contract");
 const Hub = truffleContract(HubJson);
 window.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545')); 
@@ -19,7 +19,6 @@ class Home extends Component {
     Hub.deployed().then(_hub => {
       hub = _hub
       console.log(_hub)
-      debugger
     })
     console.log('hub', hub )
     return(

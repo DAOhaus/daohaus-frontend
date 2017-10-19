@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 const Web3 = require("web3");
-import HubJson from '../../../build/contracts/Hub.json'
+import HubJson from '../../../../daohaus-contracts/build/contracts/Hub.json'
 const truffleContract = require("truffle-contract");
 const Hub = truffleContract(HubJson);
 window.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545')); 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {withRouter} from 'react-router'
 const Web3 = require("web3");
 import HubJson from '../../../../daohaus-contracts/build/contracts/Hub.json'
 const truffleContract = require("truffle-contract");
@@ -15,8 +16,9 @@ Hub.setProvider(window.web3.currentProvider)
 class Home extends Component {
   
   render() {
+    const {params} = this.props
     let hub
-    Hub.deployed().then(_hub => {
+    Hub.at(params.address).then(_hub => {
       hub = _hub
       console.log(_hub)
     })
@@ -26,7 +28,7 @@ class Home extends Component {
         <div className="pure-g">
           <div className="pure-u-1-1">
             <h1>Daohaus</h1>
-            {/*JSON.stringify(Hub)*/}
+            {JSON.stringify(Hub)}
           </div>
         </div>
       </main>
@@ -34,4 +36,4 @@ class Home extends Component {
   }
 }
 
-export default Home
+export default withRouter(Home)

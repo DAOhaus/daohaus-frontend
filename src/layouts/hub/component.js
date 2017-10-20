@@ -78,7 +78,7 @@ class HubPage extends Component {
       _proposals=[] 
     } = hubInstance
     const isMember = _members.includes(userAddress)
-    if (!hubInstance.address) return <span> Loading...</span>
+    if (!address) return <span> Loading...</span>
 
     const handleRegistration = () => {
       if (+validationCode !== +this.state.validationCode) {

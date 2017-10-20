@@ -2,33 +2,29 @@ import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router'
 import { 
-  requestHub, 
-  getHubViaAddress, 
-  requestMembers, 
-  requestProposals, 
-  registerPhone 
+  requestContract, 
+  getLocalContract, 
+  requestConstantVariable
 } from './reducer'
 import { getWeb3 } from '../../components/ethereum/reducer'
-import Hub from './component'
+import ResourceProposal from './component'
 
 const mapStateToProps = (state, ownProps) => {
   const web3 = getWeb3(state)
   return {
-    hubInstance: getHubViaAddress(state, ownProps.params.address),
+    resourceProposalInstance: getLocalContract(state, ownProps.params.address),
     userAddress: web3 && web3.eth.accounts[0]
   }
 }
 
 const mapDispatchToProps = (dispatch, { params }) => {
   return {
-    requestHub: () => dispatch(requestHub(params.address)),
-    registerPhone: (number) => dispatch(registerPhone(params.address, number)),
-    requestMembers: () => dispatch(requestMembers(params.address)),
-    requestProposals: () => dispatch(requestProposals(params.address))
+    requestContract: () => dispatch(requestContract(params.address)),
+    requestVotes: () => dispatch(requestConstantVariable(params.address))
   }
 }
 
 export default compose(
   withRouter,
   connect(mapStateToProps, mapDispatchToProps)
-)(Hub)
+)(ResourceProposal)

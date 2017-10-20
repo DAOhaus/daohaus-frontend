@@ -15,3 +15,4 @@ Todos
 [] remove "deadline" and replace it with a hub contract variable
 [] add data points like the PVR, the proposal length, etc...
 [] add in logos, change colors to match branding
+[] subscribe to logs of resource so I can view when people vote

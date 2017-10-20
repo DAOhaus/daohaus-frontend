@@ -2,8 +2,12 @@ import React, { Component } from 'react'
 import {
   RaisedButton,
   TextField,
+  Card,
+  CardText,
+  CardActions,
   Snackbar
 } from 'material-ui'
+import { Link } from 'react-router'
 
 import Blockies from 'react-blockies';
 
@@ -17,47 +21,50 @@ class HubPage extends Component {
       fees: 10,
       blocks: 2,
       cost: 5,
-      text: 1004,
+      text: "Buy a potatoe",
       validationCode: '',
       open: false,
     }
     this.state = initialState
   }
   componentDidMount() {
+    console.log('mount' )
     if (!this.props.hubInstance) this.props.requestHub()
   }
+
+  shouldComponentUpdate(){ return true}
 
   handleUsernameChange = (e) => this.setState({ username: e.target.value })
   handlePhoneChange = (e) => this.setState({ phone: e.target.value })
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })
   handlePhoneClick = () => this.props.registerPhone(this.state.phone)
   handleCreate = () => {
-    this.props.hubIstance.createResourceProposal(
-      this.props.address,
+    // be careful to add enough gas
+    this.props.hubInstance.createResourceProposal(
+      this.props.userAddress,
       this.state.fees,
       this.state.blocks,
       this.state.cost,
       this.state.text,
-      { from: this.props.address }
+      { from: this.props.userAddress, gas: 1000000 }
     ).then(res => console.log('create res:', res))
   }
 
   render() {
+    console.log('rendering:', this.props, this.state)
     const {
       hubInstance = {},
       requestMembers,
+      requestProposals,
       userAddress
     } = this.props
     const { phone, username, validationCode } = this.state
-    const { _members = [], address } = hubInstance
+    const { _members = [], address, _proposals=[] } = hubInstance
     const isMember = _members.includes(userAddress)
-    console.log('address', userAddress)
-    console.log('state', this.state)
-    console.log('props', this.props)
-    // if (!hubInstance.address) return <span> Loading...</span>
+    if (!hubInstance.address) return <span> Loading...</span>
 
     const handleRegistration = () => {
-      if (+hubInstance.validationCode !== +this.state.validationCode) {
+      if (+validationCode !== +this.state.validationCode) {
         this.setState({ open: true })
         return;
       }
@@ -66,7 +73,8 @@ class HubPage extends Component {
         gas: 3000000,
         value: 1000
       }).then(() => {
-        requestMembers(hubInstance.address);
+        requestMembers(address);
+        requestProposals(address);
       })
     }
     return (
@@ -78,46 +86,71 @@ class HubPage extends Component {
         />
         <div className="pure-g">
           <div className="pure-u-1-1" style={{ display: 'flex', alignItems: "center", flexDirection: 'column' }}>
-            <h1>Hub {address.substring(0, 5)}</h1>
-            {!isMember && <div>
-              <TextField
-                value={username}
-                onChange={this.handleUsernameChange}
-                name="username"
-                placeholder="username"
-                style={{ display: 'block' }}
-              />
-              <TextField
-                value={phone}
-                onChange={this.handlePhoneChange}
-                name="phone"
-                placeholder="phone number"
-                style={{ marginRight: '10px', display: 'block' }}
-              />
-              <RaisedButton onClick={this.handlePhoneClick} style={{ display: 'block' }}>Register phone</RaisedButton>
-              <TextField
-                value={validationCode}
-                onChange={this.handleValidationCodeChange}
-                name="vCode"
-                placeholder="validation code"
-                style={{ marginRight: '10px', display: 'block', marginBottom: '50px' }}
-              />
-              <RaisedButton onClick={handleRegistration} style={{ display: 'block', marginBottom: '50px' }}>Register Member</RaisedButton>
-              {hubInstance._members.map((n, idx) => {
-                return (
-                  <Blockies
-                    key={idx}
-                    seed={n}
-                    size={10}
-                    scale={3}
-                    style={{ display: 'inline', marginRight: '10px' }}
-                  />
-                );
-              })}
-              <div style={{ marginTop: '20px' }}>
-                {isMember && <RaisedButton primary onClick={this.handleCreate} fullWidth> Create Proposal </RaisedButton>}
+            <div>
+              <h1 style={{textAlign: 'center'}}>Hub {address.substring(0, 5)}</h1>
+              <div style={{display:'flex', justifyContent:"center"}}>
+              {_members.map((n, idx) => 
+                <Blockies
+                  key={idx}
+                  seed={n}
+                  size={10}
+                  scale={3}
+                  style={{ display: 'inline', marginRight: '10px' }}
+                />
+              )}
               </div>
-            </div>}
+              <div style={{textAlign:'center'}}>{`${_members.length} Members`}</div>
+              {!isMember && <div>
+                <TextField
+                  value={username}
+                  onChange={this.handleUsernameChange}
+                  name="username"
+                  placeholder="username"
+                  style={{ display: 'block' }}
+                />
+                <TextField
+                  value={phone}
+                  onChange={this.handlePhoneChange}
+                  name="phone"
+                  placeholder="phone number"
+                  style={{ marginBottom: '20px', display: 'block' }}
+                />
+                <RaisedButton
+                  onClick={this.handlePhoneClick}
+                  fullWidth
+                  primary
+                  style={{ display: 'block', color:'white' }}>Register</RaisedButton>
+                <div>
+                  <TextField
+                    value={validationCode}
+                    onChange={this.handleValidationCodeChange}
+                    name="vCode"
+                    placeholder="validation code"
+                    style={{ marginRight: '10px', display: 'block', marginBottom: '20px' }}
+                  />
+                  <RaisedButton
+                    onClick={handleRegistration}
+                    fullWidth
+                    primary
+                    style={{ display: 'block', color: 'white' }}> Complete Registration </RaisedButton>
+                </div>
+              </div>}
+              {isMember && <Card style={{ marginTop: '40px' }}>
+                {/* <CardHeader title="Proposals" titleStyle={{textAlign:'center'}}/> */}
+                <CardText>
+                  <h3 style={{margin: '0 0 10px 0', textAlign: 'center'}}>Resource Proposals</h3>
+                </CardText>
+                {_proposals && _proposals.map(proposal=> 
+                  <Link key={proposal} style={{}}>{proposal}</Link>
+                )}
+                <CardActions>
+                  <RaisedButton
+                    primary
+                    onClick={this.handleCreate}
+                    fullWidth={true} > <span style={{ margin: '0 15px', color: 'white' }}>Create Proposal</span> </RaisedButton>
+                </CardActions>
+              </Card>}
+            </div>
           </div>
         </div>
       </main>

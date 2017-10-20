@@ -1,10 +1,12 @@
 import { createLogic } from 'redux-logic'
+import Bluebird from 'bluebird'
 import {
   $requestHub,
   receiveHub,
   $requestMembers,
   $registerPhone,
   receiveMembers,
+  receiveProposals,
   getHubViaAddress,
   receiveValidationCode
 } from './reducer'
@@ -19,10 +21,15 @@ export default [
       const Hub = getContract(HubJson)
       Hub.at(action.address).then(hubInstance => {
         dispatch(receiveHub(hubInstance))
-        hubInstance.getMembers().then(members => {
-          dispatch(receiveMembers(action.address, members))
-          done()
-        })
+        const Promises = [
+          hubInstance.getMembers().then(members=>dispatch(receiveMembers(action.address,members))),
+          hubInstance.getProposals().then(proposals=>dispatch(receiveProposals(action.address,proposals))),
+        ]
+        Bluebird.all(Promises).then(res=>{console.log('promise res:', res); done();} )
+        // hubInstance.getMembers().then(members => {
+        //   dispatch(receiveMembers(action.address, members))
+        //   done()
+        // })
       })
     }
   }),
@@ -30,10 +37,15 @@ export default [
     type: $requestMembers,
     process({ getState, action }, dispatch, done) {
       const Hub = getHubViaAddress(getState(), action.address)
-      Hub.getMembers().then(members => {
-        dispatch(receiveMembers(action.address, members))
-        done()
-      })
+      const Promises = [
+        Hub.getMembers().then(members=>dispatch(receiveMembers(action.address,members))),
+        Hub.getProposals().then(proposals=>dispatch(receiveProposals(action.address,proposals))),
+      ]
+      Bluebird.all(Promises).then(res=>{console.log('promise res:', res); done();} )
+      // Hub.getMembers().then(members => {
+      //   dispatch(receiveMembers(action.address, members))
+      //   done()
+      // })
     }
   }),
   createLogic({
@@ -49,6 +61,7 @@ export default [
       })
       .catch(function (error) {
         console.log(error);
+        done()
       });
     }
   }),

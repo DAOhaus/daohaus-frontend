@@ -1,7 +1,13 @@
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router'
-import { requestHub, getHubViaAddress, requestMembers, registerPhone } from './reducer'
+import { 
+  requestHub, 
+  getHubViaAddress, 
+  requestMembers, 
+  requestProposals, 
+  registerPhone 
+} from './reducer'
 import { getWeb3 } from '../../components/ethereum/reducer'
 import Hub from './hub'
 
@@ -17,7 +23,8 @@ const mapDispatchToProps = (dispatch, { params }) => {
   return {
     requestHub: () => dispatch(requestHub(params.address)),
     registerPhone: (number) => dispatch(registerPhone(params.address, number)),
-    requestMembers: () => dispatch(requestMembers(params.address))
+    requestMembers: () => dispatch(requestMembers(params.address)),
+    requestProposals: () => dispatch(requestProposals(params.address))
   }
 }
 

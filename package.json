@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "material-ui": "0.19.4",

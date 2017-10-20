@@ -5,7 +5,6 @@ import {
   $requestMembers,
   $registerPhone,
   receiveMembers,
-  registerPhone,
   getHubViaAddress
 } from './reducer'
 import getContract from '../../util/getContract'
@@ -39,7 +38,6 @@ export default [
   createLogic({
     type: $registerPhone,
     process({ getState, action }, dispatch, done) {
-      console.log('ENTERING REDUX');
       axios.post('http://localhost:5000/message', {
         number: action.number,
       })

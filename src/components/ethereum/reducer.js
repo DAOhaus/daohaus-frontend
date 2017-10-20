@@ -8,4 +8,4 @@ export default (state = { web3: window.web3 }, action) => {
   }
 }
 
-export const getWeb3 = (state) => state.web3
+export const getWeb3 = (state) => state.ethereum.web3

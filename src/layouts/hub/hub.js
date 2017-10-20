@@ -16,9 +16,11 @@ class HubPage extends Component {
   handlePhoneChange = (e) => this.setState({phone: e.target.value})
 
   render() {
-    const { hubInstance = {}, requestMembers } = this.props
+    const { hubInstance = {}, requestMembers, registerPhone } = this.props
     const { phone } = this.state
     if (!hubInstance.address) return <div />
+
+    const handlePhoneChange = () => registerPhone(phone)
 
     const handleRegistration = () => hubInstance.register(phone,  { from: window.web3.eth.accounts[0], gas: 3000000, value: 1000 }).then(() => {
       requestMembers(hubInstance.address);
@@ -36,7 +38,8 @@ class HubPage extends Component {
                 placeholder="phone number"
                 style={{marginRight: '10px'}}
               />
-              <RaisedButton onClick={handleRegistration}>Register</RaisedButton>
+              <RaisedButton onClick={handlePhoneChange}>Register</RaisedButton>
+              <RaisedButton onClick={handleRegistration}>Register Member</RaisedButton>
             </div>
             {hubInstance._members.map(member=><div>{member}</div>)}
           </div>

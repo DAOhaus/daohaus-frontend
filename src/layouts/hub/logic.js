@@ -5,8 +5,12 @@ import {
   $requestMembers,
   $registerPhone,
   receiveMembers,
+<<<<<<< HEAD
   getHubViaAddress,
   receiveValidationCode
+=======
+  getHubViaAddress
+>>>>>>> cdcf46c822508b65d5dc7aad6e6217612e78fa30
 } from './reducer'
 import getContract from '../../util/getContract'
 import HubJson from '../../../../daohaus-contracts/build/contracts/Hub.json'
@@ -39,7 +43,6 @@ export default [
   createLogic({
     type: $registerPhone,
     process({ getState, action }, dispatch, done) {
-      console.log('ENTERING REDUX');
       axios.post('http://localhost:5000/message', {
         number: action.number,
       })

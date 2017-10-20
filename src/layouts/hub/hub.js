@@ -12,6 +12,12 @@ class HubPage extends Component {
     super(props)
     const initialState = {
       phone: '',
+      username: '',
+      chairmanAddress: '',
+      fees: 10,
+      blocks: 2,
+      cost: 5,
+      text: 1004,
       validationCode: '',
       open: false,
     }
@@ -21,27 +27,46 @@ class HubPage extends Component {
     if (!this.props.hubInstance) this.props.requestHub()
   }
 
+  handleUsernameChange = (e) => this.setState({username: e.target.value})
   handlePhoneChange = (e) => this.setState({phone: e.target.value})
+  handleValidationCodeChange = (e) => this.setState({validationCode:e.target.value})
+  handlePhoneClick = () => this.props.registerPhone(this.state.phone)
+  handleCreate = () => {
+    console.log('state:', this.state)
+    console.log('props:', this.props)
+    this.props.hubInstance.createResourceProposal(
+    null,
+    this.state.fees,
+    this.state.blocks,
+    this.state.cost,
+    this.state.text
+  ).then(res => console.log('create res:', res))
+}
 
   render() {
-    const { hubInstance = {}, requestMembers, registerPhone } = this.props
-    const { phone, validationCode } = this.state
-    if (!hubInstance.address) return <div />
+    const {
+      hubInstance = {},
+      requestMembers,
+      userAddress
+    } = this.props
+    const { phone, username, validationCode } = this.state
+    const {_members = [], address} = hubInstance
+    const isMember = _members.includes(userAddress)
+    console.log('address', userAddress)
+    if (!hubInstance.address) return <span> Loading...</span>
 
-    const handlePhoneChange = (e) => this.setState({phone:e.target.value})
-    const handleValidationCodeChange = (e) => this.setState({validationCode:e.target.value})
-    const handlePhoneClick = () => {
-      registerPhone(phone)
-    }
-
-    const handleRegistration = () => hubInstance.register(phone,  { from: window.web3.eth.accounts[2], gas: 3000000, value: 1000 }).then(() => {
-      console.log(hubInstance.validationCode, this.state.validationCode)
+    const handleRegistration = () => {
       if (+hubInstance.validationCode !== +this.state.validationCode) {
         this.setState({open: true})
         return;
       }
+      hubInstance.register(phone, username,  {
+        from: userAddress,
+        gas: 3000000,
+        value: 1000
+      }).then(() => {
       requestMembers(hubInstance.address);
-    })
+    })}
     return(
       <main className="container">
       <Snackbar
@@ -51,8 +76,15 @@ class HubPage extends Component {
       />
         <div className="pure-g">
           <div className="pure-u-1-1" style={{display: 'flex', alignItems:"center", flexDirection: 'column'}}>
-            <h1>Hub {hubInstance.address.substring(0,5)}</h1>
-            <div>
+            <h1>Hub {address.substring(0,5)}</h1>
+            {!isMember && <div>
+              <TextField
+                value={username}
+                onChange={this.handleUsernameChange}
+                name="username"
+                placeholder="username"
+                style={{display: 'block'}}
+              />
               <TextField
                 value={phone}
                 onChange={handlePhoneChange}
@@ -60,10 +92,10 @@ class HubPage extends Component {
                 placeholder="phone number"
                 style={{marginRight: '10px', display: 'block'}}
               />
-              <RaisedButton onClick={handlePhoneClick} style={{display: 'block'}}>Register phone</RaisedButton>
+              <RaisedButton onClick={this.handlePhoneClick} style={{display: 'block'}}>Register phone</RaisedButton>
               <TextField
                 value={validationCode}
-                onChange={handleValidationCodeChange}
+                onChange={this.handleValidationCodeChange}
                 name="vCode"
                 placeholder="validation code"
                 style={{marginRight: '10px', display: 'block', marginBottom: '50px'}}
@@ -81,6 +113,9 @@ class HubPage extends Component {
                 />
               );
             })}
+            <div style={{marginTop: '20px'}}>
+            {isMember && <RaisedButton primary onClick={this.handleCreate} fullWidth> Create Proposal </RaisedButton> }
+            </div>
           </div>
         </div>
       </main>

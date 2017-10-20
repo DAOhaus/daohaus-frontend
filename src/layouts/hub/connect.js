@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, { params }) => {
   return {
     requestHub: () => dispatch(requestHub(params.address)),
-    registerPhone: (number) => dispatch(registerPhone(number)),
+    registerPhone: (number) => dispatch(registerPhone(params.address, number)),
     requestMembers: () => dispatch(requestMembers(params.address))
   }
 }

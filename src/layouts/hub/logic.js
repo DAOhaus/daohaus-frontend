@@ -5,8 +5,8 @@ import {
   $requestMembers,
   $registerPhone,
   receiveMembers,
-  registerPhone,
-  getHubViaAddress
+  getHubViaAddress,
+  receiveValidationCode
 } from './reducer'
 import getContract from '../../util/getContract'
 import HubJson from '../../../../daohaus-contracts/build/contracts/Hub.json'
@@ -44,7 +44,8 @@ export default [
         number: action.number,
       })
       .then(function (response) {
-        console.log('response from /message', response);
+        dispatch(receiveValidationCode(action.address, response.data))
+        console.log('response from /message', response)
         done()
       })
       .catch(function (error) {

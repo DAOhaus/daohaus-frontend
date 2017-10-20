@@ -8,6 +8,7 @@ import {
   CardActions,
   Snackbar
 } from 'material-ui'
+import Blockies from 'react-blockies';
 import styled from 'styled-components'
 import { Link } from 'react-router'
 const StyledLink = styled(Link)`
@@ -18,8 +19,6 @@ const StyledLink = styled(Link)`
   & + & { border-top: 1px solid gray; }
 `
 
-import Blockies from 'react-blockies';
-
 class HubPage extends Component {
   constructor(props) {
     super(props)
@@ -27,9 +26,9 @@ class HubPage extends Component {
       phone: '',
       username: '',
       chairmanAddress: '',
-      fees: 10,
+      fees: 2,
       blocks: 2,
-      cost: 5,
+      cost: 10,
       text: "Buy a potatoe",
       validationCode: '',
       open: false,
@@ -46,7 +45,7 @@ class HubPage extends Component {
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })
   handlePhoneClick = () => this.props.registerPhone(this.state.phone)
   handleCreate = () => {
-    // be careful to add enough gas
+    // be careful to add enough gas here
     this.props.hubInstance.createResourceProposal(
       this.props.userAddress,
       this.state.fees,
@@ -69,12 +68,15 @@ class HubPage extends Component {
       username, 
       validationCode, 
       fees, 
-      blocks, 
       cost, 
       text, 
       createProposalOpen
     } = this.state
-    const { _members = [], address, _proposals=[] } = hubInstance
+    const { 
+      _members = [], 
+      address, 
+      _proposals=[] 
+    } = hubInstance
     const isMember = _members.includes(userAddress)
     if (!hubInstance.address) return <span> Loading...</span>
 
@@ -102,7 +104,7 @@ class HubPage extends Component {
         <div className="pure-g">
           <div className="pure-u-1-1" style={{ display: 'flex', alignItems: "center", flexDirection: 'column' }}>
             <div>
-              <h1 style={{textAlign: 'center'}}>Hub {address.substring(0, 5)}</h1>
+              <h1 style={{textAlign: 'center'}}>Hub {address.substring(0, 5)}//{address.slice(-3)}</h1>
               <div style={{display:'flex', justifyContent:"center"}}>
               {_members.map((n, idx) => 
                 <Blockies
@@ -151,13 +153,12 @@ class HubPage extends Component {
                 </div>
               </div>}
               {isMember && <Card style={{ marginTop: '40px', width: '320px' }} expanded={createProposalOpen}>
-                {/* <CardHeader title="Proposals" titleStyle={{textAlign:'center'}}/> */}
                 <CardText>
                   <h3 style={{margin: '0', textAlign: 'center'}}>Resource Proposals</h3>
                 </CardText>
-                {_proposals && _proposals.map(proposal=> 
+                {_proposals.length ? _proposals.map(proposal=> 
                   <StyledLink to={`/resourceProposal/${proposal}`} key={proposal}>{proposal}</StyledLink>
-                )}
+                ) : <StyledLink> Proposal List Empty</StyledLink>}
                 {!createProposalOpen && <CardActions>
                   <RaisedButton
                     primary
@@ -168,30 +169,23 @@ class HubPage extends Component {
                 </CardActions>}
                 <CardText expandable={true}>
                   <TextField
-                    value={fees}
-                    name="fee"
-                    onChange={(e)=> this.setState({fees: e.target.value})}
-                    floatingLabelText="chairman fee"
-                    style={{ display: 'block'}}
-                  />
-                  <TextField
-                    value={blocks}
-                    name="block"
-                    onChange={(e)=> this.setState({blocks: e.target.value})}
-                    floatingLabelText="deadline (in blocks)"
+                    value={text}
+                    onChange={(e)=> this.setState({text: e.target.value})}
+                    floatingLabelText="Short Description"
                     style={{ display: 'block'}}
                   />
                   <TextField
                     value={cost}
                     name="cost"
                     onChange={(e)=> this.setState({cost: e.target.value})}
-                    floatingLabelText="requested amount"
+                    floatingLabelText="Requested Amount"
                     style={{ display: 'block'}}
                   />
                   <TextField
-                    value={text}
-                    onChange={(e)=> this.setState({text: e.target.value})}
-                    floatingLabelText="proposal description"
+                    value={fees}
+                    name="fee"
+                    onChange={(e)=> this.setState({fees: e.target.value})}
+                    floatingLabelText="Your Service Fee"
                     style={{ display: 'block'}}
                   />
                 </CardText>

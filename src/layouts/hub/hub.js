@@ -21,7 +21,12 @@ class HubPage extends Component {
     if (!hubInstance.address) return <div />
 
     const handlePhoneChange = (e) => this.setState({phone:e.target.value})
-    const handlePhoneClick = () => registerPhone(phone)
+    const handlePhoneClick = () => {
+      console.log(
+        'HANDLE CLICK'
+      );
+      registerPhone(phone)
+    }
 
     const handleRegistration = () => hubInstance.register(phone,  { from: window.web3.eth.accounts[0], gas: 3000000, value: 1000 }).then(() => {
       requestMembers(hubInstance.address);

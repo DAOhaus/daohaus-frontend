@@ -39,12 +39,11 @@ export default [
   createLogic({
     type: $registerPhone,
     process({ getState, action }, dispatch, done) {
-      console.log('register phone called')
+      console.log('ENTERING REDUX');
       axios.post('http://localhost:5000/message', {
         number: action.number,
       })
       .then(function (response) {
-        dispatch(registerPhone(response))
         console.log('response from /message', response);
         done()
       })

@@ -4,6 +4,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router'
 import { Provider } from 'react-redux'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { UserIsAuthenticated } from './util/wrappers.js'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 // Layouts
 import App from './App'
@@ -21,6 +22,7 @@ const history = syncHistoryWithStore(browserHistory, store)
 
 ReactDOM.render((
     <Provider store={store}>
+      <MuiThemeProvider>
       <Router history={history}>
         <Route path="/" component={App}>
           <IndexRoute component={Home} />
@@ -31,6 +33,7 @@ ReactDOM.render((
           <Route path="profile" component={UserIsAuthenticated(Profile)} />
         </Route>
       </Router>
+      </MuiThemeProvider>
     </Provider>
   ),
   document.getElementById('root')

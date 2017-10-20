@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { compose } from 'recompose'
 import { withRouter } from 'react-router'
-import { requestHub, getHubViaAddress } from './reducer'
+import { requestHub, getHubViaAddress, requestMembers } from './reducer'
 import Hub from './hub'
 
 const mapStateToProps = (state, ownProps) => {
@@ -12,7 +12,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, { params }) => {
   return {
-    requestHub: () => dispatch(requestHub(params.address))
+    requestHub: () => dispatch(requestHub(params.address)),
+    requestMembers: () => dispatch(requestMembers(params.address))
   }
 }
 

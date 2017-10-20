@@ -5,12 +5,8 @@ import {
   $requestMembers,
   $registerPhone,
   receiveMembers,
-<<<<<<< HEAD
   getHubViaAddress,
   receiveValidationCode
-=======
-  getHubViaAddress
->>>>>>> cdcf46c822508b65d5dc7aad6e6217612e78fa30
 } from './reducer'
 import getContract from '../../util/getContract'
 import HubJson from '../../../../daohaus-contracts/build/contracts/Hub.json'

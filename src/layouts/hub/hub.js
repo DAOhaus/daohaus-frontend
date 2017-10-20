@@ -101,7 +101,6 @@ class HubPage extends Component {
                 style={{marginRight: '10px', display: 'block', marginBottom: '50px'}}
               />
               <RaisedButton onClick={handleRegistration} style={{display: 'block', marginBottom: '50px'}}>Register Member</RaisedButton>
-            </div>
             {hubInstance._members.map((n, idx) => {
               return (
                 <Blockies
@@ -114,7 +113,7 @@ class HubPage extends Component {
               );
             })}
             <div style={{marginTop: '20px'}}>
-            {isMember && <RaisedButton primary onClick={this.handleCreate} fullWidth> Create Proposal </RaisedButton> }
+              {isMember && <RaisedButton primary onClick={this.handleCreate} fullWidth> Create Proposal </RaisedButton> }
             </div>
           </div>
         </div>

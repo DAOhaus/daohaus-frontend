@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { RaisedButton, TextField } from 'material-ui'
-// import Button from 'material-ui/Button';
-// import MembersList from '../../components/MembersList';
 
 class HubPage extends Component {
   constructor(props) {

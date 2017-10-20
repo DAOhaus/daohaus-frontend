@@ -2,7 +2,6 @@ import { createLogic } from 'redux-logic'
 import { $requestHub, receiveHub } from './reducer'
 import getContract from '../../util/getContract'
 import HubJson from '../../../../daohaus-contracts/build/contracts/Hub.json'
-test
 
 export default [
   createLogic({

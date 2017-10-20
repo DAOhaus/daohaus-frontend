@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { RaisedButton, TextField } from 'material-ui'
-import axios from 'axios'
 
 class HubPage extends Component {
   constructor(props) {

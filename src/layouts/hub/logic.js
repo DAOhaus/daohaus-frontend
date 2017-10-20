@@ -6,6 +6,7 @@ import {
   $requestMembers,
   $registerPhone,
   receiveMembers,
+  $requestProposals,
   receiveProposals,
   getHubViaAddress,
   receiveValidationCode
@@ -25,11 +26,7 @@ export default [
           hubInstance.getMembers().then(members=>dispatch(receiveMembers(action.address,members))),
           hubInstance.getProposals().then(proposals=>dispatch(receiveProposals(action.address,proposals))),
         ]
-        Bluebird.all(Promises).then(res=>{console.log('promise res:', res); done();} )
-        // hubInstance.getMembers().then(members => {
-        //   dispatch(receiveMembers(action.address, members))
-        //   done()
-        // })
+        Bluebird.all(Promises).then(done)
       })
     }
   }),
@@ -37,15 +34,20 @@ export default [
     type: $requestMembers,
     process({ getState, action }, dispatch, done) {
       const Hub = getHubViaAddress(getState(), action.address)
-      const Promises = [
-        Hub.getMembers().then(members=>dispatch(receiveMembers(action.address,members))),
-        Hub.getProposals().then(proposals=>dispatch(receiveProposals(action.address,proposals))),
-      ]
-      Bluebird.all(Promises).then(res=>{console.log('promise res:', res); done();} )
-      // Hub.getMembers().then(members => {
-      //   dispatch(receiveMembers(action.address, members))
-      //   done()
-      // })
+      Hub.getMembers().then(members => {
+        dispatch(receiveMembers(action.address, members))
+        done()
+      })
+    }
+  }),
+  createLogic({
+    type: $requestProposals,
+    process({ getState, action }, dispatch, done) {
+      const Hub = getHubViaAddress(getState(), action.address)
+      Hub.getProposals().then(proposals => {
+        dispatch(receiveProposals(action.address, proposals))
+        done()
+      })
     }
   }),
   createLogic({

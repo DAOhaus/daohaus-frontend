@@ -15,8 +15,10 @@ const StyledLink = styled(Link)`
   font-size: 12px;
   text-align: center;
   display: block;
+  text-decoration: none;
   padding: 5px 10px;
-  & + & { border-top: 1px solid gray; }
+  color: black;
+  &:nth-child(odd) { background-color: #eee; }
 `
 
 class HubPage extends Component {
@@ -26,10 +28,10 @@ class HubPage extends Component {
       phone: '',
       username: '',
       chairmanAddress: '',
-      fees: 2,
+      fees: 1,
       blocks: 2,
-      cost: 10,
-      text: "Buy a potatoe",
+      cost: 5,
+      text: "Purchase Burj Khalifa Tickets",
       validationCode: '',
       open: false,
       createProposalOpen: false
@@ -44,8 +46,7 @@ class HubPage extends Component {
   handlePhoneChange = (e) => this.setState({ phone: e.target.value })
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })
   handlePhoneClick = () => this.props.registerPhone(this.state.phone)
-  handleCreate = () => {
-    // be careful to add enough gas here
+  handleCreate = () => { // be careful to add enough gas here
     this.props.hubInstance.createResourceProposal(
       this.props.userAddress,
       this.state.fees,
@@ -53,14 +54,13 @@ class HubPage extends Component {
       this.state.cost,
       this.state.text,
       { from: this.props.userAddress, gas: 1000000 }
-    ).then(res => console.log('create res:', res))
+    ).then(res => {this.setState({createProposalOpen: false}); this.props.requestProposals();})
   }
 
   render() {
     const {
       hubInstance = {},
       requestMembers,
-      requestProposals,
       userAddress
     } = this.props
     const { 
@@ -89,10 +89,7 @@ class HubPage extends Component {
         from: userAddress,
         gas: 3000000,
         value: 1000
-      }).then(() => {
-        requestMembers(address);
-        requestProposals(address);
-      })
+      }).then(requestMembers)
     }
     return (
       <main className="container">
@@ -159,7 +156,7 @@ class HubPage extends Component {
                 {_proposals.length ? _proposals.map(proposal=> 
                   <StyledLink to={`/resourceProposal/${proposal}`} key={proposal}>{proposal}</StyledLink>
                 ) : <StyledLink> Proposal List Empty</StyledLink>}
-                {!createProposalOpen && <CardActions>
+                {!createProposalOpen && <CardActions style={{marginTop: '5px'}}>
                   <RaisedButton
                     primary
                     fullWidth={true}

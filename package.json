@@ -31,6 +31,7 @@
     "gzip-size": "3.0.0",
     "html-webpack-plugin": "2.24.0",
     "http-proxy-middleware": "0.17.2",
+    "install-peers": "^1.0.2",
     "jest": "18.1.0",
     "json-loader": "0.5.4",
     "object-assign": "4.1.0",
@@ -59,6 +60,7 @@
     "recompose": "^0.26.0",
     "redux": "^3.6.0",
     "redux-auth-wrapper": "^1.0.0",
+    "redux-logic": "^0.12.3",
     "redux-thunk": "^2.2.0",
     "uport-connect": "^0.6.1"
   },

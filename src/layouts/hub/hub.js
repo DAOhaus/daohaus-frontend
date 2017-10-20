@@ -32,14 +32,13 @@ class HubPage extends Component {
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })
   handlePhoneClick = () => this.props.registerPhone(this.state.phone)
   handleCreate = () => {
-    console.log('state:', this.state)
-    console.log('props:', this.props)
-    this.props.hubInstance.createResourceProposal(
-      null,
+    this.props.hubIstance.createResourceProposal(
+      this.props.address,
       this.state.fees,
       this.state.blocks,
       this.state.cost,
-      this.state.text
+      this.state.text,
+      { from: this.props.address }
     ).then(res => console.log('create res:', res))
   }
 
@@ -53,7 +52,9 @@ class HubPage extends Component {
     const { _members = [], address } = hubInstance
     const isMember = _members.includes(userAddress)
     console.log('address', userAddress)
-    if (!hubInstance.address) return <span> Loading...</span>
+    console.log('state', this.state)
+    console.log('props', this.props)
+    // if (!hubInstance.address) return <span> Loading...</span>
 
     const handleRegistration = () => {
       if (+hubInstance.validationCode !== +this.state.validationCode) {

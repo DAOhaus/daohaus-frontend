@@ -5,10 +5,8 @@ import { requestHub, getHubViaAddress, requestMembers } from './reducer'
 import Hub from './hub'
 
 const mapStateToProps = (state, ownProps) => {
-  const instance = getHubViaAddress(state, ownProps.params.address)
   return {
-    hubInstance: instance,
-    hubMembers: instance ? instance._members : []
+    hubInstance: getHubViaAddress(state, ownProps.params.address),
   }
 }
 

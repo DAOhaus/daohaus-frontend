@@ -16,12 +16,9 @@ class HubPage extends Component {
   handlePhoneChange = (e) => this.setState({phone: e.target.value})
 
   render() {
-    const { hubInstance = {}, requestMembers, hubMembers } = this.props
+    const { hubInstance = {}, requestMembers } = this.props
     const { phone } = this.state
     if (!hubInstance.address) return <div />
-    hubInstance.getMembersCount().then(res=>console.log('members:', res.toString()))
-    console.log('instance', hubInstance)
-    console.log('members', hubMembers)
 
     const handleRegistration = () => hubInstance.register(phone,  { from: window.web3.eth.accounts[0], gas: 3000000, value: 1000 }).then(() => {
       requestMembers(hubInstance.address);

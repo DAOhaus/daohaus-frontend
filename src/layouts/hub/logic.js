@@ -5,10 +5,12 @@ import {
   $requestMembers,
   $registerPhone,
   receiveMembers,
+  registerPhone,
   getHubViaAddress
 } from './reducer'
 import getContract from '../../util/getContract'
 import HubJson from '../../../../daohaus-contracts/build/contracts/Hub.json'
+import axios from 'axios'
 
 export default [
   createLogic({
@@ -37,7 +39,17 @@ export default [
   createLogic({
     type: $registerPhone,
     process({ getState, action }, dispatch, done) {
-      // axios here
+      axios.post('http://localhost:5000/message', {
+        number: action.number,
+      })
+      .then(function (response) {
+        dispatch(registerPhone(response))
+        console.log('response from /message', response);
+        done()
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
   }),
 ]

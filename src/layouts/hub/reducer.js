@@ -12,6 +12,9 @@ export const requestMembers = makeActionCreator($requestMembers, 'address')
 export const $receiveMembers = 'RECEIVE_MEMBERS'
 export const receiveMembers = makeActionCreator($receiveMembers, 'address', 'members')
 
+export const $registerPhone = 'REGISTER_PHONE'
+export const registerPhone = makeActionCreator($registerPhone, 'number')
+
 export default (state = {}, action) => {
   switch (action.type) {
     case $receiveHub:

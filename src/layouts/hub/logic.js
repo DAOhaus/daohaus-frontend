@@ -3,6 +3,7 @@ import {
   $requestHub,
   receiveHub,
   $requestMembers,
+  $registerPhone,
   receiveMembers,
   getHubViaAddress
 } from './reducer'
@@ -31,6 +32,12 @@ export default [
         dispatch(receiveMembers(action.address, members))
         done()
       })
+    }
+  }),
+  createLogic({
+    type: $registerPhone,
+    process({ getState, action }, dispatch, done) {
+      // axios here
     }
   }),
 ]

@@ -67,6 +67,7 @@
     "redux-auth-wrapper": "^1.0.0",
     "redux-logic": "^0.12.3",
     "redux-thunk": "^2.2.0",
+    "styled-components": "^2.2.1",
     "twilio": "^3.8.1",
     "uport-connect": "^0.6.1",
     "web3": "^0.19.1"

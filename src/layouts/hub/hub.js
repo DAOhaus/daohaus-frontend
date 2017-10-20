@@ -1,13 +1,22 @@
 import React, { Component } from 'react'
 import {
   RaisedButton,
+  FlatButton,
   TextField,
   Card,
   CardText,
   CardActions,
   Snackbar
 } from 'material-ui'
+import styled from 'styled-components'
 import { Link } from 'react-router'
+const StyledLink = styled(Link)`
+  font-size: 12px;
+  text-align: center;
+  display: block;
+  padding: 5px 10px;
+  & + & { border-top: 1px solid gray; }
+`
 
 import Blockies from 'react-blockies';
 
@@ -24,15 +33,13 @@ class HubPage extends Component {
       text: "Buy a potatoe",
       validationCode: '',
       open: false,
+      createProposalOpen: false
     }
     this.state = initialState
   }
   componentDidMount() {
-    console.log('mount' )
     if (!this.props.hubInstance) this.props.requestHub()
   }
-
-  shouldComponentUpdate(){ return true}
 
   handleUsernameChange = (e) => this.setState({ username: e.target.value })
   handlePhoneChange = (e) => this.setState({ phone: e.target.value })
@@ -51,14 +58,22 @@ class HubPage extends Component {
   }
 
   render() {
-    console.log('rendering:', this.props, this.state)
     const {
       hubInstance = {},
       requestMembers,
       requestProposals,
       userAddress
     } = this.props
-    const { phone, username, validationCode } = this.state
+    const { 
+      phone, 
+      username, 
+      validationCode, 
+      fees, 
+      blocks, 
+      cost, 
+      text, 
+      createProposalOpen
+    } = this.state
     const { _members = [], address, _proposals=[] } = hubInstance
     const isMember = _members.includes(userAddress)
     if (!hubInstance.address) return <span> Loading...</span>
@@ -135,20 +150,61 @@ class HubPage extends Component {
                     style={{ display: 'block', color: 'white' }}> Complete Registration </RaisedButton>
                 </div>
               </div>}
-              {isMember && <Card style={{ marginTop: '40px' }}>
+              {isMember && <Card style={{ marginTop: '40px', width: '320px' }} expanded={createProposalOpen}>
                 {/* <CardHeader title="Proposals" titleStyle={{textAlign:'center'}}/> */}
                 <CardText>
-                  <h3 style={{margin: '0 0 10px 0', textAlign: 'center'}}>Resource Proposals</h3>
+                  <h3 style={{margin: '0', textAlign: 'center'}}>Resource Proposals</h3>
                 </CardText>
                 {_proposals && _proposals.map(proposal=> 
-                  <Link key={proposal} style={{}}>{proposal}</Link>
+                  <StyledLink to={`/resourceProposal/${proposal}`} key={proposal}>{proposal}</StyledLink>
                 )}
-                <CardActions>
+                {!createProposalOpen && <CardActions>
                   <RaisedButton
                     primary
-                    onClick={this.handleCreate}
-                    fullWidth={true} > <span style={{ margin: '0 15px', color: 'white' }}>Create Proposal</span> </RaisedButton>
-                </CardActions>
+                    fullWidth={true}
+                    onClick={() => this.setState({createProposalOpen: true})}>
+                    <span style={{ color: 'white' }}>Create Proposal</span> 
+                  </RaisedButton>
+                </CardActions>}
+                <CardText expandable={true}>
+                  <TextField
+                    value={fees}
+                    name="fee"
+                    onChange={(e)=> this.setState({fees: e.target.value})}
+                    floatingLabelText="chairman fee"
+                    style={{ display: 'block'}}
+                  />
+                  <TextField
+                    value={blocks}
+                    name="block"
+                    onChange={(e)=> this.setState({blocks: e.target.value})}
+                    floatingLabelText="deadline (in blocks)"
+                    style={{ display: 'block'}}
+                  />
+                  <TextField
+                    value={cost}
+                    name="cost"
+                    onChange={(e)=> this.setState({cost: e.target.value})}
+                    floatingLabelText="requested amount"
+                    style={{ display: 'block'}}
+                  />
+                  <TextField
+                    value={text}
+                    onChange={(e)=> this.setState({text: e.target.value})}
+                    floatingLabelText="proposal description"
+                    style={{ display: 'block'}}
+                  />
+                </CardText>
+                <CardActions expandable={true}>
+                <RaisedButton
+                  primary
+                  onClick={this.handleCreate}
+                  style={{ color: 'white', display: 'block', marginBottom: '10px' }}
+                  fullWidth={true} >Finalize </RaisedButton>
+                <FlatButton
+                  onClick={() => this.setState({createProposalOpen: false })}
+                  fullWidth={true} >Cancel </FlatButton>
+                  </CardActions>
               </Card>}
             </div>
           </div>

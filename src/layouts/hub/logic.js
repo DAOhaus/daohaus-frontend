@@ -16,16 +16,19 @@ export default [
       const Hub = getContract(HubJson)
       Hub.at(action.address).then(hubInstance => {
         dispatch(receiveHub(hubInstance))
-        done()
+        hubInstance.getMembers().then(members => {
+          dispatch(receiveMembers(action.address, members))
+          done()
+        })
       })
     }
   }),
   createLogic({
     type: $requestMembers,
     process({ getState, action }, dispatch, done) {
-      const Hub = getHubViaAddress(action.address)
+      const Hub = getHubViaAddress(getState(), action.address)
       Hub.getMembers().then(members => {
-        dispatch(receiveMembers(members))
+        dispatch(receiveMembers(action.address, members))
         done()
       })
     }

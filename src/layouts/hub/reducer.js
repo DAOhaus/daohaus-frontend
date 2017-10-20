@@ -20,9 +20,13 @@ export default (state = {}, action) => {
         [action.hub.address]: action.hub
       }
     case $receiveMembers:
+      if (!action.address && !action.members) {
+        console.error('Must have both address and members') 
+        return state
+      }
       return {
         ...state,
-        [action.address]: { ...state.id, _members:action.members }
+        [action.address]: { ...state[action.address], _members:action.members }
       }
     default:
       return state

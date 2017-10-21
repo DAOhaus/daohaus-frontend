@@ -44,6 +44,8 @@ class HubPage extends Component {
     if (!this.props.hubInstance) this.props.requestHub()
   }
 
+  shouldComponentUpdate(){ return true }
+
   handleUsernameChange = (e) => this.setState({ username: e.target.value })
   handlePledgeChange = (e) => this.setState({ pledge: e.target.value })
   handlePhoneChange = (e) => this.setState({ phone: e.target.value })
@@ -103,6 +105,7 @@ class HubPage extends Component {
         value: web3.toWei(pledge)
       }).then(requestMembers)
     }
+    console.log('rendering:', hubInstance)
     return (
       <main className="container">
         <Snackbar
@@ -129,6 +132,7 @@ class HubPage extends Component {
               <CardText>
                 <TextField
                   value={pledge}
+                  type="number"
                   fullWidth
                   onChange={this.handlePledgeChange}
                   name="pledge"
@@ -164,7 +168,7 @@ class HubPage extends Component {
                     onChange={this.handleValidationCodeChange}
                     fullWidth
                     name="vCode"
-                    placeholder="validation code"
+                    floatingLabelText="validation code"
                     style={{ marginRight: '10px', display: 'block', marginBottom: '20px' }}
                   />
                   <RaisedButton

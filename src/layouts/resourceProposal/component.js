@@ -9,6 +9,7 @@ import {
 import { FirstLast } from '../../components'
 import { Link } from 'react-router'
 import styled from 'styled-components'
+import Blockies from 'react-blockies';
 
 const StyledItem = styled('span')`
   font-size: 12px;
@@ -45,7 +46,7 @@ class ResourceProposal extends Component {
       _votes
     } = resourceProposalInstance
 
-    console.log(_votes);
+    console.log("VOTE B", _votes);
     if (!address) return <span> Loading...</span>
     const isChairman = userAddress === _chairman
     return(
@@ -62,7 +63,6 @@ class ResourceProposal extends Component {
                 <StyledItem> <span>Chairman:</span><span> {FirstLast(_chairman)}</span></StyledItem>
                 <StyledItem> <span>Blocks Until Close:</span><span> {_deadline}</span></StyledItem>
                 <StyledItem> <span>Parent Hub:</span><Link to={`/hub/${_owner}`} > {FirstLast(_owner)}</Link></StyledItem>
-                {_votes.length ? <span>votes: {_votes}</span> : null}
               </CardText>
 
                 <CardActions style={{marginBottom: '15px', display: 'flex', justifyContent: 'space-around'}}>
@@ -70,6 +70,16 @@ class ResourceProposal extends Component {
                   <RaisedButton style={{color: 'white'}} primary onClick={this.handleYes}> Yes </RaisedButton>
                 </CardActions>
             </Card>
+            <h3>Votes</h3>
+            {_votes.length ? _votes.map((n, idx) =>
+              <Blockies
+                key={idx}
+                seed={n}
+                size={20}
+                scale={3}
+                style={{ display: 'inline-block', margin: '10px' }}
+              />
+            ) : null}
             <div style={{ margin: '20px 0', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
               <div style={{ margin: '5px 0' }}>Status: {getStatus(_status)}</div>
               {isChairman && _status==='0' &&

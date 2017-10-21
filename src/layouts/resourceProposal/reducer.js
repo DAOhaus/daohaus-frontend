@@ -30,7 +30,7 @@ export default (state = {}, action) => {
         ...state,
         [action.address]: {
           ...state[action.address],
-          ['_'+action.name]: action.value.toString ? action.value.toString() : action.value
+          ['_'+action.name]: action.value.toString && action.value.constructor.name !== 'Array' ? action.value.toString() : action.value
         }
       }
     default:

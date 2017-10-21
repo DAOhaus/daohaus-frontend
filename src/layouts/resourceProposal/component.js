@@ -23,17 +23,21 @@ const StyledItem = styled('span')`
 
 class ResourceProposal extends Component {
 
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() { if (!this.props.resourceProposalInstance) this.props.requestContract() }
   handleYes = () => this.props.castVote(1)
   handleNo = () => this.props.castVote(2)
   executeProposal = () => this.props.executeProposal()
-  
+
   render() {
     const {
       resourceProposalInstance = {},
       userAddress
     } = this.props
-    const { 
+    const {
       address,
       _owner,
       _chairman,
@@ -44,6 +48,8 @@ class ResourceProposal extends Component {
       _status,
       _votes
     } = resourceProposalInstance
+
+    console.log(_votes);
     if (!address) return <span> Loading...</span>
     const isChairman = userAddress === _chairman
     return(
@@ -62,7 +68,7 @@ class ResourceProposal extends Component {
                 <StyledItem> <span>Parent Hub:</span><Link to={`/hub/${_owner}`} > {FirstLast(_owner)}</Link></StyledItem>
                 {_votes.length ? <span>votes: {_votes}</span> : null}
               </CardText>
-                
+
                 <CardActions style={{marginBottom: '15px', display: 'flex', justifyContent: 'space-around'}}>
                   <RaisedButton style={{color: 'white'}} secondary onClick={this.handleNo}> No</RaisedButton>
                   <RaisedButton style={{color: 'white'}} primary onClick={this.handleYes}> Yes </RaisedButton>

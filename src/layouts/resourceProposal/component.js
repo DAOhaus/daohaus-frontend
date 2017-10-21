@@ -48,6 +48,20 @@ class ResourceProposal extends Component {
   handleNo = () => this.props.castVote(2)
   executeProposal = () => this.props.executeProposal()
 
+  componentWillReceiveProps() {
+    if(this.props.resourceProposalInstance && !this.state.watcher){
+      console.log('adding watcher');
+      const watchVotes = this.props.resourceProposalInstance.LogVoteCast({},{fromBlock:'latest'});
+      this.state.watcher =true;
+      watchVotes.watch(function(error, result){
+        console.log("HEE:LLLLLLLLLLOOOOO", result);
+        if(result){
+          this.props.requestVotes();
+        }
+      })
+    }
+  }
+
   render() {
     const {
       resourceProposalInstance = {},

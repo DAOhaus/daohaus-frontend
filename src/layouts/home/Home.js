@@ -9,7 +9,7 @@ class Home extends Component {
         <div className="pure-g">
           <div className="pure-u-1-1">
             <h1>Daohaus</h1>
-            <Link to="/hub/asdf">Hub</Link>
+            <Link to="/hub/0x9ac063aeb584b479adcfa7615befc23875ba4de4">Hub</Link>
           </div>
         </div>
       </main>

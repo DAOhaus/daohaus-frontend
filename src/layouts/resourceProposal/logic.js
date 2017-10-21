@@ -6,6 +6,7 @@ import {
   requestConstantVariable,
   $requestConstantVariable,
   receiveConstantVariable,
+  $executeProposal,
   $castVote,
   getLocalContract,
 } from './reducer'
@@ -28,7 +29,6 @@ export default [
           'proposalText'
         ]
         dispatch(receiveContract(resourceInstance))
-        console.log('resourceInstance from req:', resourceInstance)
         variables.forEach(name => dispatch(requestConstantVariable(name, action.address)))
         done()
       })
@@ -40,6 +40,16 @@ export default [
       const Contract = getLocalContract(getState(), action.address)
       Contract[action.name]().then(variable => {
         dispatch(receiveConstantVariable(action.name, variable, action.address))
+        done()
+      })
+    }
+  }),
+  createLogic({
+    type: $executeProposal,
+    process({ getState, action }, dispatch, done) {
+      const Contract = getLocalContract(getState(), action.address)
+      Contract.castVote().then(status => {
+        dispatch(receiveConstantVariable('status', status, action.address))
         done()
       })
     }

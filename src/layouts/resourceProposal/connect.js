@@ -5,6 +5,7 @@ import {
   requestContract, 
   getLocalContract, 
   castVote,
+  executeProposal,
   requestConstantVariable
 } from './reducer'
 import { getWeb3 } from '../../components/ethereum/reducer'
@@ -22,6 +23,7 @@ const mapDispatchToProps = (dispatch, { params }) => {
   return {
     requestContract: () => dispatch(requestContract(params.address)),
     castVote: vote => dispatch(castVote(vote, params.address)),
+    executeProposal: () => dispatch(executeProposal(params.address)),
     requestVotes: () => dispatch(requestConstantVariable(params.address))
   }
 }

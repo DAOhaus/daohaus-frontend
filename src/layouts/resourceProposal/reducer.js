@@ -10,6 +10,8 @@ export const $receiveConstantVariable = 'RECEIVE_CONSTANT_VARIABLE'
 export const receiveConstantVariable = makeActionCreator($receiveConstantVariable, 'name', 'value', 'address')
 export const $castVote = 'CAST_VOTE'
 export const castVote = makeActionCreator($castVote, 'vote', 'address')
+export const $executeProposal = 'EXECUTE_PROPOSAL'
+export const executeProposal = makeActionCreator($executeProposal, 'address')
 
 export default (state = {}, action) => {
   switch (action.type) {

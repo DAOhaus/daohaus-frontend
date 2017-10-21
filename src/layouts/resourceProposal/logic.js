@@ -29,9 +29,7 @@ export default [
           'proposalText'
         ]
         dispatch(receiveContract(resourceInstance))
-        console.log("INSTANCE", resourceInstance)
         resourceInstance.getVotes().then(_votes => {
-          console.log("VOTES", _votes)
           dispatch(receiveConstantVariable('votes', _votes, action.address))
           done()
         })
@@ -55,7 +53,13 @@ export default [
       const Contract = getLocalContract(getState(), action.address)
       Contract.castVote().then(status => {
         dispatch(receiveConstantVariable('status', status, action.address))
-        done()
+        setTimeout(function() {
+          Contract.getVotes().then(_votes => {
+            dispatch(receiveConstantVariable('votes', _votes, action.address))
+            done()
+          })
+          done()
+        }, 3000);
       })
     }
   }),

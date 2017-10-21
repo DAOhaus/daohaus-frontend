@@ -23,10 +23,6 @@ const StyledItem = styled('span')`
 
 class ResourceProposal extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() { if (!this.props.resourceProposalInstance) this.props.requestContract() }
   handleYes = () => this.props.castVote(1)
   handleNo = () => this.props.castVote(2)

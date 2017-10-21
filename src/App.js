@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import squareLogo from '../src/img/brand/logo-square.png'
+import { connect } from 'react-redux'
+import { receiveWeb3 } from './components/ethereum/reducer'
 
 // Styles
 import './css/open-sans.css'
@@ -18,11 +20,15 @@ class App extends Component {
             Daohaus
           </span>
         </nav>
-
         {this.props.children}
       </div>
     );
   }
 }
+const mapDispatch = (dispatch) => {
+  return {
+    dispatchWeb3: (web3) => dispatch(receiveWeb3(web3))
+  }
+}
 
-export default App
+export default connect(null,mapDispatch)(App)

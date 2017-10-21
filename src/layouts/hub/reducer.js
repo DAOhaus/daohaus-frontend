@@ -2,7 +2,6 @@ import makeActionCreator from '../../util/makeActionCreator'
 
 export const $requestHub = 'REQUEST_HUB'
 export const requestHub = makeActionCreator($requestHub, 'address')
-
 export const $receiveHub = 'RECEIVE_HUB'
 export const receiveHub = makeActionCreator($receiveHub, 'hub')
 export const $requestMembers = 'REQUEST_MEMBERS'
@@ -30,6 +29,7 @@ export default (state = {}, action) => {
         console.error('Must have both address and members')
         return state
       }
+      console.log('reducer', action.members)
       return {
         ...state,
         [action.address]: { ...state[action.address], _members:action.members }

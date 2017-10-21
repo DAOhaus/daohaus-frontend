@@ -5,6 +5,7 @@ import {
   TextField,
   Card,
   CardText,
+  CardHeader,
   CardActions,
   Snackbar
 } from 'material-ui'
@@ -27,6 +28,7 @@ class HubPage extends Component {
     const initialState = {
       phone: '',
       username: '',
+      pledge: '',
       chairmanAddress: '',
       fees: 1,
       blocks: 2,
@@ -42,16 +44,10 @@ class HubPage extends Component {
     if (!this.props.hubInstance) this.props.requestHub()
   }
 
-  componentWillReceiveProps(props){
-    console.log('props to be received:', props)
-  }
-
-  shouldComponentUpdate(nextProps, nextState){
-    console.log('should Update?', nextProps, nextState)
-    return true
-  }
+  shouldComponentUpdate(){ return true }
 
   handleUsernameChange = (e) => this.setState({ username: e.target.value })
+  handlePledgeChange = (e) => this.setState({ pledge: e.target.value })
   handlePhoneChange = (e) => this.setState({ phone: e.target.value })
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })
   handlePhoneClick = () => this.props.registerPhone(this.state.phone)
@@ -77,15 +73,17 @@ class HubPage extends Component {
     const {
       hubInstance = {},
       requestMembers,
-      userAddress
+      userAddress,
+      web3
     } = this.props
-    const {
-      phone,
-      username,
-      validationCode,
-      fees,
-      cost,
-      text,
+    const { 
+      phone, 
+      username, 
+      validationCode, 
+      fees, 
+      cost, 
+      pledge,
+      text, 
       createProposalOpen
     } = this.state
     const {
@@ -104,9 +102,10 @@ class HubPage extends Component {
       hubInstance.register(phone, username, {
         from: userAddress,
         gas: 3000000,
-        value: 1000
+        value: web3.toWei(pledge)
       }).then(requestMembers)
     }
+    console.log('rendering:', hubInstance)
     return (
       <main className="container">
         <Snackbar
@@ -119,24 +118,33 @@ class HubPage extends Component {
             <div style={{width: '320px'}}>
               <h1 style={{textAlign: 'center'}}>Hub {address.substring(0, 5)}//{address.slice(-3)}</h1>
               <div style={{display:'flex', justifyContent:"center"}}>
-              {_members.map((n, idx) =>
+              {_members.map((n, idx) =><div key={idx} style={{ display: 'inline', margin: '3px' }}> 
                 <Blockies
-                  key={idx}
                   seed={n}
                   size={10}
                   scale={3}
-                  style={{ display: 'inline', marginRight: '10px' }}
-                />
+                /></div>
               )}
               </div>
               <div style={{textAlign:'center'}}>{`${_members.length} Members`}</div>
-              {!isMember && <div>
+              {!isMember && <Card style={{marginTop: '20px'}}>
+              <CardHeader title="Join Group" />
+              <CardText>
+                <TextField
+                  value={pledge}
+                  type="number"
+                  fullWidth
+                  onChange={this.handlePledgeChange}
+                  name="pledge"
+                  floatingLabelText="Ether Pledge"
+                  style={{ display: 'block' }}
+                />
                 <TextField
                   value={username}
                   fullWidth
                   onChange={this.handleUsernameChange}
                   name="username"
-                  placeholder="username"
+                  floatingLabelText="Username"
                   style={{ display: 'block' }}
                 />
                 <TextField
@@ -144,7 +152,7 @@ class HubPage extends Component {
                   fullWidth
                   onChange={this.handlePhoneChange}
                   name="phone"
-                  placeholder="phone number"
+                  floatingLabelText="Phone number"
                   style={{ marginBottom: '20px', display: 'block' }}
                 />
                 <RaisedButton
@@ -160,7 +168,7 @@ class HubPage extends Component {
                     onChange={this.handleValidationCodeChange}
                     fullWidth
                     name="vCode"
-                    placeholder="validation code"
+                    floatingLabelText="validation code"
                     style={{ marginRight: '10px', display: 'block', marginBottom: '20px' }}
                   />
                   <RaisedButton
@@ -169,7 +177,8 @@ class HubPage extends Component {
                     primary
                     style={{ display: 'block', color: 'white' }}> Complete Registration </RaisedButton>
                 </div>}
-              </div>}
+                </CardText>
+              </Card>}
               {isMember && <Card style={{ marginTop: '40px', width: '320px' }} expanded={createProposalOpen}>
                 <CardText>
                   <h3 style={{margin: '0', textAlign: 'center'}}>Resource Proposals</h3>

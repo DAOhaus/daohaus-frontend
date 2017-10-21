@@ -34,20 +34,29 @@ export default [
     type: $requestMembers,
     process({ getState, action }, dispatch, done) {
       const Hub = getHubViaAddress(getState(), action.address)
-      Hub.getMembers().then(members => {
-        dispatch(receiveMembers(action.address, members))
-        done()
-      })
+      // need to set some sort of interval to check for success
+      // timeout for now with testrpc
+      setTimeout(function() {
+        Hub.getMembers().then(members => {
+          console.log('members received', members)
+          dispatch(receiveMembers(action.address, members))
+          done()
+        })
+      }, 3000);
     }
   }),
   createLogic({
     type: $requestProposals,
     process({ getState, action }, dispatch, done) {
       const Hub = getHubViaAddress(getState(), action.address)
-      Hub.getProposals().then(proposals => {
-        dispatch(receiveProposals(action.address, proposals))
-        done()
-      })
+       // need to set some sort of interval to check for success
+      // timeout for now with testrpc
+      setTimeout(function() {
+        Hub.getProposals().then(proposals => {
+          dispatch(receiveProposals(action.address, proposals))
+          done()
+        })
+      }, 3000);
     }
   }),
   createLogic({

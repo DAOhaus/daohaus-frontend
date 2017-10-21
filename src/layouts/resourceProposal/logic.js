@@ -22,11 +22,13 @@ export default [
           'chairman',
           'chairmanFee',
           'deadline',
+          'owner',
           'projectCost',
           'status',
           'proposalText'
         ]
         dispatch(receiveContract(resourceInstance))
+        console.log('resourceInstance from req:', resourceInstance)
         variables.forEach(name => dispatch(requestConstantVariable(name, action.address)))
         done()
       })

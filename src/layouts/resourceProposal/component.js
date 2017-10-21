@@ -27,10 +27,12 @@ class ResourceProposal extends Component {
   
   render() {
     const {
-      resourceProposalInstance = {}
+      resourceProposalInstance = {},
+      userAddress
     } = this.props
     const { 
       address,
+      _owner,
       _chairman,
       _chairmanFee,
       _deadline,
@@ -40,6 +42,8 @@ class ResourceProposal extends Component {
       _votes
     } = resourceProposalInstance
     if (!address) return <span> Loading...</span>
+    const isChairman = userAddress === _chairman
+    console.log('isChairman', userAddress, _owner )
     return(
       <main className="container">
         <div className="pure-g">
@@ -62,6 +66,7 @@ class ResourceProposal extends Component {
                   <RaisedButton style={{color: 'white'}} primary onClick={this.handleYes}> Yes </RaisedButton>
                 </CardActions>
                 </Card>
+                {isChairman}
           </div>
         </div>
       </main>

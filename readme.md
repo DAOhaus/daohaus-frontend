@@ -17,7 +17,6 @@ Todos
 [] add in logos, change colors to match branding
 [] refactor spoke pitch
 [] subscribe to logs of resource so I can view when people vote
-[] ask why not put variables public?
 ---
 [] longer form descriptions (one long and one short)
 [] check if member of hub before allowing to vote

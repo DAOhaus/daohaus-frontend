@@ -24,10 +24,29 @@ const StyledItem = styled('span')`
 
 class ResourceProposal extends Component {
 
+  constructor(props){
+   super(props);
+   this.state = {watcher:false};
+  }
+
   componentDidMount() { if (!this.props.resourceProposalInstance) this.props.requestContract() }
   handleYes = () => this.props.castVote(1)
   handleNo = () => this.props.castVote(2)
   executeProposal = () => this.props.executeProposal()
+
+  componentWillReceiveProps() {
+    if(this.props.resourceProposalInstance && !this.state.watcher){
+      console.log('adding watcher');
+      const watchVotes = this.props.resourceProposalInstance.LogVoteCast({},{fromBlock:'latest'});
+      this.state.watcher =true;
+      watchVotes.watch(function(error, result){
+        console.log("HEE:LLLLLLLLLLOOOOO", result);
+        if(result){
+          this.props.requestVotes();
+        }
+      })
+    }
+  }
 
   render() {
     const {

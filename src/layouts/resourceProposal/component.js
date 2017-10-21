@@ -25,22 +25,12 @@ class ResourceProposal extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      votes: []
-    };
-    this.getVotesList();
   }
 
   componentDidMount() { if (!this.props.resourceProposalInstance) this.props.requestContract() }
   handleYes = () => this.props.castVote(1)
   handleNo = () => this.props.castVote(2)
   executeProposal = () => this.props.executeProposal()
-  getVotesList = () => {
-    const votes = this.props.resourceProposalInstance
-      .getVotes()
-    this.setState({votes: votes});
-    console.log(votes)
-  }
 
   render() {
     const {

@@ -56,13 +56,20 @@ class HubPage extends Component {
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })
   handlePhoneClick = () => this.props.registerPhone(this.state.phone)
   handleCreate = () => { // be careful to add enough gas here
+    console.log(
+      this.props.userAddress,
+      this.state.fees,
+      this.state.blocks,
+      this.state.cost,
+      this.state.text,
+    );
     this.props.hubInstance.createResourceProposal(
       this.props.userAddress,
       this.state.fees,
       this.state.blocks,
       this.state.cost,
       this.state.text,
-      { from: this.props.userAddress, gas: 1000000 }
+      { from: this.props.userAddress, gas: 3000000 }
     ).then(res => {this.setState({createProposalOpen: false}); this.props.requestProposals();})
   }
 
@@ -72,19 +79,19 @@ class HubPage extends Component {
       requestMembers,
       userAddress
     } = this.props
-    const { 
-      phone, 
-      username, 
-      validationCode, 
-      fees, 
-      cost, 
-      text, 
+    const {
+      phone,
+      username,
+      validationCode,
+      fees,
+      cost,
+      text,
       createProposalOpen
     } = this.state
-    const { 
-      _members = [], 
-      address, 
-      _proposals=[] 
+    const {
+      _members = [],
+      address,
+      _proposals=[]
     } = hubInstance
     const isMember = _members.includes(userAddress)
     if (!address) return <span> Loading...</span>
@@ -112,7 +119,7 @@ class HubPage extends Component {
             <div style={{width: '320px'}}>
               <h1 style={{textAlign: 'center'}}>Hub {address.substring(0, 5)}//{address.slice(-3)}</h1>
               <div style={{display:'flex', justifyContent:"center"}}>
-              {_members.map((n, idx) => 
+              {_members.map((n, idx) =>
                 <Blockies
                   key={idx}
                   seed={n}
@@ -167,7 +174,7 @@ class HubPage extends Component {
                 <CardText>
                   <h3 style={{margin: '0', textAlign: 'center'}}>Resource Proposals</h3>
                 </CardText>
-                {_proposals.length ? _proposals.map(proposal=> 
+                {_proposals.length ? _proposals.map(proposal=>
                   <StyledLink to={`/resourceProposal/${proposal}`} key={proposal}>{proposal}</StyledLink>
                 ) : <StyledLink> Proposal List Empty</StyledLink>}
                 {!createProposalOpen && <CardActions style={{marginTop: '5px'}}>
@@ -175,7 +182,7 @@ class HubPage extends Component {
                     primary
                     fullWidth={true}
                     onClick={() => this.setState({createProposalOpen: true})}>
-                    <span style={{ color: 'white' }}>Create Proposal</span> 
+                    <span style={{ color: 'white' }}>Create Proposal</span>
                   </RaisedButton>
                 </CardActions>}
                 <CardText expandable={true}>

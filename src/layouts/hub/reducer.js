@@ -2,7 +2,6 @@ import makeActionCreator from '../../util/makeActionCreator'
 
 export const $requestHub = 'REQUEST_HUB'
 export const requestHub = makeActionCreator($requestHub, 'address')
-
 export const $receiveHub = 'RECEIVE_HUB'
 export const receiveHub = makeActionCreator($receiveHub, 'hub')
 export const $requestMembers = 'REQUEST_MEMBERS'

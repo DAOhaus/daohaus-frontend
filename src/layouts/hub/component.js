@@ -42,15 +42,6 @@ class HubPage extends Component {
     if (!this.props.hubInstance) this.props.requestHub()
   }
 
-  componentWillReceiveProps(props){
-    console.log('props to be received:', props)
-  }
-
-  shouldComponentUpdate(nextProps, nextState){
-    console.log('should Update?', nextProps, nextState)
-    return true
-  }
-
   handleUsernameChange = (e) => this.setState({ username: e.target.value })
   handlePhoneChange = (e) => this.setState({ phone: e.target.value })
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })

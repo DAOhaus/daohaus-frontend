@@ -1,8 +1,14 @@
-import Web3 from "web3";
-window.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+import makeActionCreator from '../../util/makeActionCreator'
+export const $receiveWeb3 = 'RECEIVE_WEB3'
+export const receiveWeb3 = makeActionCreator($receiveWeb3, 'web3')
 
-export default (state = { web3: window.web3 }, action) => {
+export default (state = { web3: null }, action) => {
   switch (action.type) {
+  case $receiveWeb3:
+    return {
+      ...state,
+      web3: action.web3
+    }
     default:
       return state
   }

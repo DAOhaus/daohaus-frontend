@@ -21,16 +21,15 @@ export default (state = {}, action) => {
         [action.contract.address]: { ...action.contract, _votes:[] }
       }
     case $receiveConstantVariable:
-      console.log(action.name);
       if (!action.address || !action.name || !action.value) {
-        console.error('Must have address, name and value')
         return state
       }
+      console.log('name', action.name)
       return {
         ...state,
         [action.address]: {
           ...state[action.address],
-          ['_'+action.name]: action.value.toString && action.value.constructor.name !== 'Array' ? action.value.toString() : action.value
+          ['_'+action.name]: (action.value.toString && action.value.constructor.name !== 'Array') ? action.value.toString() : action.value
         }
       }
     default:

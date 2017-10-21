@@ -5,7 +5,6 @@ import {
   TextField,
   Card,
   CardText,
-  CardHeader,
   CardActions,
   Snackbar
 } from 'material-ui'
@@ -52,13 +51,6 @@ class HubPage extends Component {
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })
   handlePhoneClick = () => this.props.registerPhone(this.state.phone)
   handleCreate = () => { // be careful to add enough gas here
-    console.log(
-      this.props.userAddress,
-      this.state.fees,
-      this.state.blocks,
-      this.state.cost,
-      this.state.text,
-    );
     this.props.hubInstance.createResourceProposal(
       this.props.userAddress,
       this.state.fees,
@@ -105,7 +97,6 @@ class HubPage extends Component {
         value: web3.toWei(pledge)
       }).then(requestMembers)
     }
-    console.log('rendering:', hubInstance)
     return (
       <main className="container">
         <Snackbar
@@ -128,8 +119,8 @@ class HubPage extends Component {
               </div>
               <div style={{textAlign:'center'}}>{`${_members.length} Members`}</div>
               {!isMember && <Card style={{marginTop: '20px'}}>
-              <CardHeader title="Join Group" />
               <CardText>
+                <span>Join Group</span>
                 <TextField
                   value={pledge}
                   type="number"

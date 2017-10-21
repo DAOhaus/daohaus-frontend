@@ -13,7 +13,6 @@ import Hub from './component'
 
 const mapStateToProps = (state, ownProps) => {
   const web3 = getWeb3(state)
-  console.log('new instance', getHubViaAddress(state, ownProps.params.address))
   return {
     hubInstance: getHubViaAddress(state, ownProps.params.address),
     web3: getWeb3(state),

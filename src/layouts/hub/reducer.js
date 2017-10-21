@@ -29,7 +29,6 @@ export default (state = {}, action) => {
         console.error('Must have both address and members')
         return state
       }
-      console.log('reducer', action.members)
       return {
         ...state,
         [action.address]: { ...state[action.address], _members:action.members }

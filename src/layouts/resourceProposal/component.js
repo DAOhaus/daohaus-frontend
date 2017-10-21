@@ -24,6 +24,25 @@ const StyledItem = styled('span')`
 
 class ResourceProposal extends Component {
 
+  constructor(props){
+    super(props);
+    this.state = {watcher:false};
+  }
+
+ componentWillReceiveProps() {
+    if(this.props.resourceProposalInstance && !this.state.watcher){
+      console.log('adding watcher');
+      const watchVotes = this.props.resourceProposalInstance.LogVoteCast({},{fromBlock:'latest'});
+      this.setState({ watcher: true })
+      watchVotes.watch(function(error, result){
+        console.log("HEE:LLLLLLLLLLOOOOO", result);
+        if(result){
+          this.props.requestVotes();
+        }
+      })
+    }
+  }
+
   componentDidMount() { if (!this.props.resourceProposalInstance) this.props.requestContract() }
   handleYes = () => this.props.castVote(1)
   handleNo = () => this.props.castVote(2)
@@ -46,8 +65,8 @@ class ResourceProposal extends Component {
       _votes
     } = resourceProposalInstance
 
-    console.log("VOTE B", _votes);
     if (!address) return <span> Loading...</span>
+    console.log('loggs',_chairman, _projectCost, resourceProposalInstance)
     const isChairman = userAddress === _chairman
     return(
       <main className="container">

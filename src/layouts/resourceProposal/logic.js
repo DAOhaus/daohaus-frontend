@@ -30,7 +30,7 @@ export default [
         ]
         dispatch(receiveContract(resourceInstance))
         console.log("INSTANCE", resourceInstance)
-        resourceInstance.getVotes().then(_votes => {
+        resourceInstance.getNumOfVotes().then(_votes => {
           console.log("VOTES", _votes)
           dispatch(receiveConstantVariable('votes', _votes, action.address))
           done()

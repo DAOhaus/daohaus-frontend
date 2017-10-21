@@ -34,7 +34,9 @@ export default [
     type: $requestMembers,
     process({ getState, action }, dispatch, done) {
       const Hub = getHubViaAddress(getState(), action.address)
+      console.log('made it to logic', Hub )
       Hub.getMembers().then(members => {
+        console.log('members received', members)
         dispatch(receiveMembers(action.address, members))
         done()
       })

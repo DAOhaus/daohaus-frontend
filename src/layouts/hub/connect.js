@@ -15,6 +15,7 @@ const mapStateToProps = (state, ownProps) => {
   const web3 = getWeb3(state)
   return {
     hubInstance: getHubViaAddress(state, ownProps.params.address),
+    web3: getWeb3(state),
     userAddress: web3 && web3.eth.accounts[0]
   }
 }
@@ -23,7 +24,7 @@ const mapDispatchToProps = (dispatch, { params }) => {
   return {
     requestHub: () => dispatch(requestHub(params.address)),
     registerPhone: (number) => dispatch(registerPhone(params.address, number)),
-    requestMembers: () => dispatch(requestMembers(params.address)),
+    requestMembers: () => {console.log('made it'); dispatch(requestMembers(params.address))},
     requestProposals: () => dispatch(requestProposals(params.address))
   }
 }

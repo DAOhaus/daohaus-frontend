@@ -55,10 +55,9 @@ export default [
     process({ getState, action }, dispatch, done) {
       axios.post('http://localhost:5000/message', {
         number: action.number,
-      })
-      .then(function (response) {
-        dispatch(receiveValidationCode(action.address, response.data))
+      }).then(function (response) {
         console.log('response from /message', response)
+        dispatch(receiveValidationCode(action.address, response.data))
         done()
       })
       .catch(function (error) {

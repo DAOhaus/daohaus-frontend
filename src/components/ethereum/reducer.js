@@ -9,3 +9,4 @@ export default (state = { web3: window.web3 }, action) => {
 }
 
 export const getWeb3 = (state) => state.ethereum.web3
+export const getAccount = state => state.ethereum.web3.eth.accounts[0]

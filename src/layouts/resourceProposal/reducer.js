@@ -8,6 +8,8 @@ export const $requestConstantVariable = 'REQUEST_CONSTANT_VARIABLE'
 export const requestConstantVariable = makeActionCreator($requestConstantVariable, 'name', 'address')
 export const $receiveConstantVariable = 'RECEIVE_CONSTANT_VARIABLE'
 export const receiveConstantVariable = makeActionCreator($receiveConstantVariable, 'name', 'value', 'address')
+export const $castVote = 'CAST_VOTE'
+export const castVote = makeActionCreator($castVote, 'vote', 'address')
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -23,7 +25,10 @@ export default (state = {}, action) => {
       }
       return {
         ...state,
-        [action.address]: { ...state[action.address], ['_'+action.name]:action.value }
+        [action.address]: { 
+          ...state[action.address], 
+          ['_'+action.name]: action.value.toString ? action.value.toString() : action.value 
+        }
       }
     default:
       return state

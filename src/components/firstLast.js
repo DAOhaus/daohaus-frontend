@@ -1,0 +1,1 @@
+export default string => string ? `${string.substring(0, 5)}//${string.slice(-3)}` : null

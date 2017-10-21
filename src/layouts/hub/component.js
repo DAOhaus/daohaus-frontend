@@ -42,6 +42,15 @@ class HubPage extends Component {
     if (!this.props.hubInstance) this.props.requestHub()
   }
 
+  componentWillReceiveProps(props){
+    console.log('props to be received:', props)
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    console.log('should Update?', nextProps, nextState)
+    return true
+  }
+
   handleUsernameChange = (e) => this.setState({ username: e.target.value })
   handlePhoneChange = (e) => this.setState({ phone: e.target.value })
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })
@@ -100,7 +109,7 @@ class HubPage extends Component {
         />
         <div className="pure-g">
           <div className="pure-u-1-1" style={{ display: 'flex', alignItems: "center", flexDirection: 'column' }}>
-            <div>
+            <div style={{width: '320px'}}>
               <h1 style={{textAlign: 'center'}}>Hub {address.substring(0, 5)}//{address.slice(-3)}</h1>
               <div style={{display:'flex', justifyContent:"center"}}>
               {_members.map((n, idx) => 
@@ -117,6 +126,7 @@ class HubPage extends Component {
               {!isMember && <div>
                 <TextField
                   value={username}
+                  fullWidth
                   onChange={this.handleUsernameChange}
                   name="username"
                   placeholder="username"
@@ -124,6 +134,7 @@ class HubPage extends Component {
                 />
                 <TextField
                   value={phone}
+                  fullWidth
                   onChange={this.handlePhoneChange}
                   name="phone"
                   placeholder="phone number"
@@ -132,12 +143,15 @@ class HubPage extends Component {
                 <RaisedButton
                   onClick={this.handlePhoneClick}
                   fullWidth
+                  disabled={!!hubInstance.validationCode}
                   primary
                   style={{ display: 'block', color:'white' }}>Register</RaisedButton>
-                <div>
+                {hubInstance.validationCode && <div style={{marginTop: '40px'}}>
+                  <span>You should be receiving a verification code shortly</span>
                   <TextField
                     value={validationCode}
                     onChange={this.handleValidationCodeChange}
+                    fullWidth
                     name="vCode"
                     placeholder="validation code"
                     style={{ marginRight: '10px', display: 'block', marginBottom: '20px' }}
@@ -147,7 +161,7 @@ class HubPage extends Component {
                     fullWidth
                     primary
                     style={{ display: 'block', color: 'white' }}> Complete Registration </RaisedButton>
-                </div>
+                </div>}
               </div>}
               {isMember && <Card style={{ marginTop: '40px', width: '320px' }} expanded={createProposalOpen}>
                 <CardText>

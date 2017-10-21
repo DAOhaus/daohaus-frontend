@@ -4,6 +4,7 @@ import { withRouter } from 'react-router'
 import { 
   requestContract, 
   getLocalContract, 
+  castVote,
   requestConstantVariable
 } from './reducer'
 import { getWeb3 } from '../../components/ethereum/reducer'
@@ -20,6 +21,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, { params }) => {
   return {
     requestContract: () => dispatch(requestContract(params.address)),
+    castVote: vote => dispatch(castVote(vote, params.address)),
     requestVotes: () => dispatch(requestConstantVariable(params.address))
   }
 }

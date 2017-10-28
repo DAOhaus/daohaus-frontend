@@ -29,8 +29,9 @@ export default [
           'proposalText'
         ]
         dispatch(receiveContract(resourceInstance))
-        variables.forEach(name => dispatch(requestConstantVariable(name, action.address)))
-        resourceInstance.getVotes().then(_votes => {
+        console.log("INSTANCE", resourceInstance)
+        resourceInstance.getNumOfVotes().then(_votes => {
+          console.log("VOTES", _votes)
           dispatch(receiveConstantVariable('votes', _votes, action.address))
           done()
         })

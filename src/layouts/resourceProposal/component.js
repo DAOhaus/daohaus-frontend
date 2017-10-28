@@ -99,20 +99,10 @@ class ResourceProposal extends Component {
               </CardText>
 
                 <CardActions style={{marginBottom: '15px', display: 'flex', justifyContent: 'space-around'}}>
-                  <RaisedButton style={{color: 'white'}} secondary onClick={this.handleNo}> No</RaisedButton>
-                  <RaisedButton style={{color: 'white'}} primary onClick={this.handleYes}> Yes </RaisedButton>
+                  <RaisedButton style={{color: 'white'}} secondary onClick={this.handleNo}>No ({_votes[1].toString()})</RaisedButton>
+                  <RaisedButton style={{color: 'white'}} primary onClick={this.handleYes}>Yes ({_votes[0].toString()})</RaisedButton>
                 </CardActions>
             </Card>
-            <h3>Votes</h3>
-            {_votes.length ? _votes.map((n, idx) =>
-              <Blockies
-                key={idx}
-                seed={n}
-                size={20}
-                scale={3}
-                style={{ display: 'inline-block', margin: '10px' }}
-              />
-            ) : null}
             <div style={{ margin: '20px 0', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
               <div style={{ margin: '5px 0' }}>Status: {getStatus(_status)}</div>
               {isChairman && _status==='0' &&

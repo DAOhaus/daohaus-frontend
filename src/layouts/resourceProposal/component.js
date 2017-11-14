@@ -9,7 +9,6 @@ import {
 import { FirstLast } from '../../components'
 import { Link } from 'react-router'
 import styled from 'styled-components'
-import Blockies from 'react-blockies';
 
 const StyledItem = styled('span')`
   font-size: 12px;
@@ -48,20 +47,6 @@ class ResourceProposal extends Component {
   handleNo = () => this.props.castVote(2)
   executeProposal = () => this.props.executeProposal()
 
-  componentWillReceiveProps() {
-    if(this.props.resourceProposalInstance && !this.state.watcher){
-      console.log('adding watcher');
-      const watchVotes = this.props.resourceProposalInstance.LogVoteCast({},{fromBlock:'latest'});
-      this.state.watcher =true;
-      watchVotes.watch(function(error, result){
-        console.log("HEE:LLLLLLLLLLOOOOO", result);
-        if(result){
-          this.props.requestVotes();
-        }
-      })
-    }
-  }
-
   render() {
     const {
       resourceProposalInstance = {},
@@ -80,7 +65,6 @@ class ResourceProposal extends Component {
     } = resourceProposalInstance
 
     if (!address) return <span> Loading...</span>
-    console.log('loggs',_chairman, _projectCost, resourceProposalInstance)
     const isChairman = userAddress === _chairman
     return(
       <main className="container">
@@ -97,11 +81,12 @@ class ResourceProposal extends Component {
                 <StyledItem> <span>Blocks Until Close:</span><span> {_deadline}</span></StyledItem>
                 <StyledItem> <span>Parent Hub:</span><Link to={`/hub/${_owner}`} > {FirstLast(_owner)}</Link></StyledItem>
               </CardText>
-
+              {_votes.length &&
                 <CardActions style={{marginBottom: '15px', display: 'flex', justifyContent: 'space-around'}}>
                   <RaisedButton style={{color: 'white'}} secondary onClick={this.handleNo}>No ({_votes[1].toString()})</RaisedButton>
                   <RaisedButton style={{color: 'white'}} primary onClick={this.handleYes}>Yes ({_votes[0].toString()})</RaisedButton>
                 </CardActions>
+              }
             </Card>
             <div style={{ margin: '20px 0', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
               <div style={{ margin: '5px 0' }}>Status: {getStatus(_status)}</div>

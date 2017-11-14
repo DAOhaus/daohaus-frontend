@@ -8,12 +8,10 @@ import {
   receiveMembers,
   $requestProposals,
   receiveProposals,
-  getHubViaAddress,
-  receiveValidationCode
+  getHubViaAddress
 } from './reducer'
 import getContract from '../../util/getContract'
 import HubJson from '../../../../daohaus-contracts/build/contracts/Hub.json'
-import axios from 'axios'
 
 export default [
   createLogic({
@@ -27,7 +25,7 @@ export default [
           hubInstance.getProposals().then(proposals=>dispatch(receiveProposals(action.address,proposals))),
         ]
         Bluebird.all(Promises).then(done)
-      })
+      }).catch(done)
     }
   }),
   createLogic({
@@ -62,17 +60,18 @@ export default [
   createLogic({
     type: $registerPhone,
     process({ getState, action }, dispatch, done) {
-      axios.post('http://localhost:5000/register', {
-        number: action.number,
-      }).then(function (response) {
-        console.log('response from /message', response)
-        dispatch(receiveValidationCode(action.address, response.data))
-        done()
-      })
-      .catch(function (error) {
-        console.log(error);
-        done()
-      });
+      done()
+      // axios.post('http://localhost:5000/register', {
+      //   number: action.number,
+      // }).then(function (response) {
+      //   console.log('response from /message', response)
+      //   dispatch(receiveValidationCode(action.address, response.data))
+      //   done()
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      //   done()
+      // });
     }
   }),
 ]

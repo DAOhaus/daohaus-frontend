@@ -24,7 +24,6 @@ export default (state = {}, action) => {
       if (!action.address || !action.name || !action.value) {
         return state
       }
-      console.log('name', action.name)
       return {
         ...state,
         [action.address]: {

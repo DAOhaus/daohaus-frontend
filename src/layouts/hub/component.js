@@ -87,10 +87,11 @@ class HubPage extends Component {
     if (!address) return <span> Loading...</span>
 
     const handleRegistration = () => {
-      if (+validationCode !== +this.state.validationCode) {
-        this.setState({ open: true })
-        return;
-      }
+      // TODO: make phone optional
+      // if (+validationCode !== +this.state.validationCode) {
+      //   this.setState({ open: true })
+      //   return;
+      // }
       hubInstance.register(phone, username, {
         from: userAddress,
         gas: 3000000,

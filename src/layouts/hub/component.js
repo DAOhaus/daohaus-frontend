@@ -29,10 +29,10 @@ class HubPage extends Component {
       username: '',
       pledge: '',
       chairmanAddress: '',
-      fees: 1,
-      blocks: 2,
-      cost: 5,
-      text: "Purchase Burj Khalifa Tickets",
+      fees: '',
+      blocks: '',
+      cost: '',
+      text: '',
       validationCode: '',
       open: false,
       createProposalOpen: false
@@ -47,15 +47,15 @@ class HubPage extends Component {
 
   handleUsernameChange = (e) => this.setState({ username: e.target.value })
   handlePledgeChange = (e) => this.setState({ pledge: e.target.value })
-  handlePhoneChange = (e) => this.setState({ phone: e.target.value })
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })
   handlePhoneClick = () => this.props.registerPhone(this.state.phone)
   handleCreate = () => { // be careful to add enough gas here
+    debugger;
     this.props.hubInstance.createResourceProposal(
       this.props.userAddress,
-      this.state.fees,
+      this.props.web3.toWei(this.state.fees),
       this.state.blocks,
-      this.state.cost,
+      this.props.web3.toWei(this.state.cost),
       this.state.text,
       { from: this.props.userAddress, gas: 3000000 }
     ).then(res => {this.setState({createProposalOpen: false}); this.props.requestProposals();})
@@ -69,7 +69,6 @@ class HubPage extends Component {
       web3
     } = this.props
     const { 
-      phone, 
       username, 
       validationCode, 
       fees, 
@@ -84,14 +83,10 @@ class HubPage extends Component {
       _proposals=[]
     } = hubInstance
     const isMember = _members.includes(userAddress)
+    console.log('rendering hub at address', address)
     if (!address) return <span> Loading...</span>
 
     const handleRegistration = () => {
-      // TODO: make phone optional
-      // if (+validationCode !== +this.state.validationCode) {
-      //   this.setState({ open: true })
-      //   return;
-      // }
       hubInstance.register(phone, username, {
         from: userAddress,
         gas: 3000000,

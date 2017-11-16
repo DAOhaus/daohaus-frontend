@@ -24,7 +24,7 @@ export default [
           'chairmanFee',
           'deadline',
           'owner',
-          'projectCost',
+          'proposalCost',
           'status',
           'proposalText'
         ]
@@ -42,6 +42,7 @@ export default [
     process({ getState, action }, dispatch, done) {
       const Contract = getLocalContract(getState(), action.address)
       Contract[action.name]().then(variable => {
+        console.log('recieved variable:', action.name, variable)
         dispatch(receiveConstantVariable(action.name, variable, action.address))
         done()
       })

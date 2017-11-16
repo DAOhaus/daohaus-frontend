@@ -3,5 +3,6 @@ node_modules/*
 build/*
 package-lock.json
 users.md
-.DS_STORE
+.DS_Store
+**/*.DS_Store
 build_webpack/*

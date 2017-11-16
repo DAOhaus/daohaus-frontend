@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import LoadingIcon from '../../components/loadingIcon'
 import { getStatus } from './utils'
 import {
   RaisedButton,
@@ -50,7 +51,8 @@ class ResourceProposal extends Component {
   render() {
     const {
       resourceProposalInstance = {},
-      userAddress
+      userAddress,
+      web3
     } = this.props
     const {
       address,
@@ -64,7 +66,7 @@ class ResourceProposal extends Component {
       _votes
     } = resourceProposalInstance
 
-    if (!address) return <span> Loading...</span>
+    if (!address) return <LoadingIcon fill />
     const isChairman = userAddress === _chairman
     return(
       <main className="container">
@@ -75,8 +77,8 @@ class ResourceProposal extends Component {
             <Card style={{ width: '320px', marginTop: '30px' }}>
               <CardText>
                 <h3 style={{ margin: '0', textAlign: 'center', marginBottom: '10px' }}>{_proposalText}</h3>
-                <StyledItem> <span>Proposal Cost:</span><span> {_projectCost}</span></StyledItem>
-                <StyledItem> <span>Chairman Fee:</span><span> {_chairmanFee}</span></StyledItem>
+                <StyledItem> <span>Proposal Cost:</span><span> {web3.fromWei(_projectCost, 'ether')} ETH</span></StyledItem>
+                <StyledItem> <span>Chairman Fee:</span><span> {web3.fromWei(_chairmanFee, 'ether')} ETH</span></StyledItem>
                 <StyledItem> <span>Chairman:</span><span> {FirstLast(_chairman)}</span></StyledItem>
                 <StyledItem> <span>Blocks Until Close:</span><span> {_deadline}</span></StyledItem>
                 <StyledItem> <span>Parent Hub:</span><Link to={`/hub/${_owner}`} > {FirstLast(_owner)}</Link></StyledItem>

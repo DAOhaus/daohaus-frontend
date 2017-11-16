@@ -5,10 +5,10 @@ import {
   TextField,
   Card,
   CardText,
-  CardActions,
-  Snackbar
+  CardActions
 } from 'material-ui'
-import Blockies from 'react-blockies';
+import Blockies from 'react-blockies'
+import LoadingIcon from '../../components/loadingIcon'
 import styled from 'styled-components'
 import { Link } from 'react-router'
 const StyledLink = styled(Link)`
@@ -25,7 +25,7 @@ class HubPage extends Component {
   constructor(props) {
     super(props)
     const initialState = {
-      phone: '',
+      blockcomId: '',
       username: '',
       pledge: '',
       chairmanAddress: '',
@@ -47,10 +47,14 @@ class HubPage extends Component {
 
   handleUsernameChange = (e) => this.setState({ username: e.target.value })
   handlePledgeChange = (e) => this.setState({ pledge: e.target.value })
+  handleBlockcomChange = (e) => this.setState({ blockcomId: e.target.value })
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })
-  handlePhoneClick = () => this.props.registerPhone(this.state.phone)
   handleCreate = () => { // be careful to add enough gas here
-    debugger;
+    console.log('params sending to contract',this.props.userAddress,
+    this.props.web3.toWei(this.state.fees),
+    this.state.blocks,
+    this.props.web3.toWei(this.state.cost),
+    this.state.text, )
     this.props.hubInstance.createResourceProposal(
       this.props.userAddress,
       this.props.web3.toWei(this.state.fees),
@@ -58,7 +62,11 @@ class HubPage extends Component {
       this.props.web3.toWei(this.state.cost),
       this.state.text,
       { from: this.props.userAddress, gas: 3000000 }
-    ).then(res => {this.setState({createProposalOpen: false}); this.props.requestProposals();})
+    ).then(res => { 
+      console.log('response from creation:', res)
+      this.setState({createProposalOpen: false}); 
+      this.props.requestProposals();
+    })
   }
 
   render() {
@@ -70,9 +78,9 @@ class HubPage extends Component {
     } = this.props
     const { 
       username, 
-      validationCode, 
       fees, 
       cost, 
+      blockcomId,
       pledge,
       text, 
       createProposalOpen
@@ -84,10 +92,10 @@ class HubPage extends Component {
     } = hubInstance
     const isMember = _members.includes(userAddress)
     console.log('rendering hub at address', address)
-    if (!address) return <span> Loading...</span>
+    if (!address) return <LoadingIcon fill />
 
     const handleRegistration = () => {
-      hubInstance.register(phone, username, {
+      hubInstance.register(blockcomId, username, {
         from: userAddress,
         gas: 3000000,
         value: web3.toWei(pledge)
@@ -95,11 +103,6 @@ class HubPage extends Component {
     }
     return (
       <main className="container">
-        <Snackbar
-          open={this.state.open}
-          message="Invalid code"
-          autoHideDuration={4000}
-        />
         <div className="pure-g">
           <div className="pure-u-1-1" style={{ display: 'flex', alignItems: "center", flexDirection: 'column' }}>
             <div style={{width: '320px'}}>
@@ -116,7 +119,7 @@ class HubPage extends Component {
               <div style={{textAlign:'center'}}>{`${_members.length} Members`}</div>
               {!isMember && <Card style={{marginTop: '20px'}}>
               <CardText>
-                <span>Join Group</span>
+                <h2>Join Group</h2>
                 <TextField
                   value={pledge}
                   type="number"
@@ -131,48 +134,32 @@ class HubPage extends Component {
                   fullWidth
                   onChange={this.handleUsernameChange}
                   name="username"
-                  floatingLabelText="Username"
+                  floatingLabelText="Username (optional)"
                   style={{ display: 'block' }}
                 />
                 <TextField
-                  value={phone}
+                  value={blockcomId}
                   fullWidth
-                  onChange={this.handlePhoneChange}
-                  name="phone"
-                  floatingLabelText="Phone number"
+                  onChange={this.handleBlockcomChange}
+                  name="blockcomId"
+                  floatingLabelText="Blockcom Id (optional)"
                   style={{ marginBottom: '20px', display: 'block' }}
                 />
                 <RaisedButton
-                  onClick={this.handlePhoneClick}
+                  onClick={handleRegistration}
                   fullWidth
-                  disabled={!!hubInstance.validationCode}
+                  disabled={!pledge}
                   primary
                   style={{ display: 'block', color:'white' }}>Register</RaisedButton>
-                {hubInstance.validationCode && <div style={{marginTop: '40px'}}>
-                  <span>You should be receiving a verification code shortly</span>
-                  <TextField
-                    value={validationCode}
-                    onChange={this.handleValidationCodeChange}
-                    fullWidth
-                    name="vCode"
-                    floatingLabelText="validation code"
-                    style={{ marginRight: '10px', display: 'block', marginBottom: '20px' }}
-                  />
-                  <RaisedButton
-                    onClick={handleRegistration}
-                    fullWidth
-                    primary
-                    style={{ display: 'block', color: 'white' }}> Complete Registration </RaisedButton>
-                </div>}
                 </CardText>
               </Card>}
               {isMember && <Card style={{ marginTop: '40px', width: '320px' }} expanded={createProposalOpen}>
-                <CardText>
-                  <h3 style={{margin: '0', textAlign: 'center'}}>Resource Proposals</h3>
-                </CardText>
-                {_proposals.length ? _proposals.map(proposal=>
-                  <StyledLink to={`/resourceProposal/${proposal}`} key={proposal}>{proposal}</StyledLink>
-                ) : <StyledLink> Proposal List Empty</StyledLink>}
+              <CardText> 
+                  <h3 style={{margin: '0', textAlign: 'center'}}>Resource Proposals</h3> 
+                </CardText> 
+                {_proposals.length ? _proposals.map(proposal=> 
+                  <StyledLink to={`/resourceProposal/${proposal}`} key={proposal}>{proposal}</StyledLink> 
+                ) : <StyledLink> Proposal List Empty</StyledLink>} 
                 {!createProposalOpen && <CardActions style={{marginTop: '5px'}}>
                   <RaisedButton
                     primary

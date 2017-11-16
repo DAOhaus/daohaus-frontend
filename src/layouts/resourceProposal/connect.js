@@ -15,7 +15,8 @@ const mapStateToProps = (state, ownProps) => {
   const web3 = getWeb3(state)
   return {
     resourceProposalInstance: getLocalContract(state, ownProps.params.address),
-    userAddress: web3 && web3.eth.accounts[0]
+    userAddress: web3 && web3.eth.accounts[0],
+    web3: web3
   }
 }
 

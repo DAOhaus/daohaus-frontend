@@ -15,11 +15,12 @@ class Home extends Component {
 
   render() {
     const { hubAddress } = this.state
+    const networkId = window.web3.version.network
     return (
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-            <p>You are currently on the __ network</p>
+            <p style={{ color: networkId === '1' ? 'red' : 'initial'}}>You are currently using networkId {networkId}</p>
             <div>
               <span>Visit Hub @ </span>
               <TextField

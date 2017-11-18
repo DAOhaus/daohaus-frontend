@@ -11,11 +11,11 @@ Run `npm start`
 Todos
 ===
 
-- [ ] Retrieval of "proposalCost" variable from resourceProposal contract not working
+- [x] Retrieval of "proposalCost" variable from resourceProposal contract not working
 - [ ] Allow switching between accounts on testrpc, or just hookup metamask
-- [ ] Fix to not work if code is wrong
+- [ ] Refactor tests that are meant to "throw" to follow pattern that won't break ganache - http://truffleframework.com/tutorials/testing-for-throws-in-solidity-tests
 - [ ] factor in block times.  Right now instant, I'll need to keep polling when I receive tx hash
-- [ ] figure out why it takes so long to load, add spinner
+- [ ] figure out why it takes so long to load
 - [ ] remove "deadline" and replace it with a hub contract variable
 - [ ] add data points like the PVR, the proposal length, etc...
 - [ ] add in logos, change colors to match branding

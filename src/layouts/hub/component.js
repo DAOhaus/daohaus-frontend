@@ -95,6 +95,7 @@ class HubPage extends Component {
     if (!address) return <LoadingIcon fill />
 
     const handleRegistration = () => {
+      console.log('useraddress', userAddress)
       hubInstance.register(blockcomId, username, {
         from: userAddress,
         gas: 3000000,

@@ -60,7 +60,7 @@ class ResourceProposal extends Component {
       _chairman,
       _chairmanFee,
       _deadline,
-      _projectCost,
+      _proposalCost,
       _proposalText,
       _status,
       _votes
@@ -68,6 +68,7 @@ class ResourceProposal extends Component {
 
     if (!address) return <LoadingIcon fill />
     const isChairman = userAddress === _chairman
+    console.log('instance:', resourceProposalInstance)
     return(
       <main className="container">
         <div className="pure-g">
@@ -77,7 +78,7 @@ class ResourceProposal extends Component {
             <Card style={{ width: '320px', marginTop: '30px' }}>
               <CardText>
                 <h3 style={{ margin: '0', textAlign: 'center', marginBottom: '10px' }}>{_proposalText}</h3>
-                <StyledItem> <span>Proposal Cost:</span><span> {web3.fromWei(_projectCost, 'ether')} ETH</span></StyledItem>
+                <StyledItem> <span>Proposal Cost:</span><span> {web3.fromWei(_proposalCost, 'ether')} ETH</span></StyledItem>
                 <StyledItem> <span>Chairman Fee:</span><span> {web3.fromWei(_chairmanFee, 'ether')} ETH</span></StyledItem>
                 <StyledItem> <span>Chairman:</span><span> {FirstLast(_chairman)}</span></StyledItem>
                 <StyledItem> <span>Blocks Until Close:</span><span> {_deadline}</span></StyledItem>

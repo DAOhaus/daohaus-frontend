@@ -10,16 +10,18 @@ Run `npm start`
 
 Todos
 ===
-[] Allow switching between accounts on testrpc, or just hookup metamask
-[] Fix to not work if code is wrong
-[] factor in block times.  Right now instant, I'll need to keep polling when I receive tx hash
-[] figure out why it takes so long to load, add spinner
-[] remove "deadline" and replace it with a hub contract variable
-[] add data points like the PVR, the proposal length, etc...
-[] add in logos, change colors to match branding
-[] refactor spoke pitch
-[] subscribe to logs of resource so I can view when people vote
+
+- [ ] Retrieval of "proposalCost" variable from resourceProposal contract not working
+- [ ] Allow switching between accounts on testrpc, or just hookup metamask
+- [ ] Fix to not work if code is wrong
+- [ ] factor in block times.  Right now instant, I'll need to keep polling when I receive tx hash
+- [ ] figure out why it takes so long to load, add spinner
+- [ ] remove "deadline" and replace it with a hub contract variable
+- [ ] add data points like the PVR, the proposal length, etc...
+- [ ] add in logos, change colors to match branding
+- [ ] refactor spoke pitch
+- [ ] subscribe to logs of resource so I can view when people vote
 ---
-[] longer form descriptions (one long and one short)
-[] check if member of hub before allowing to vote
-[] convert blocks to time?  Or atleast get countdown working
+- [ ] longer form descriptions (one long and one short)
+- [ ] check if member of hub before allowing to vote
+- [ ] convert blocks to time?  Or atleast get countdown working

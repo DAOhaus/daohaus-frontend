@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
+import { connect } from 'react-redux'
+import { getWeb3 } from '../../components/ethereum/reducer'
 import { TextField, RaisedButton } from 'material-ui'
 
 class Home extends Component {
@@ -15,12 +17,14 @@ class Home extends Component {
 
   render() {
     const { hubAddress } = this.state
-    const networkId = window.web3.version.network
+    const { web3 } = this.props
+    const networkId = web3.version.network
+    console.log('id', networkId)
     return (
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-            <p style={{ color: networkId === '1' ? 'red' : 'initial'}}>You are currently using networkId {networkId}</p>
+            {networkId !== '5777' && <p style={{ color: 'red'}}>Not using local testrpc, for best results use Ganache</p>}
             <div>
               <span>Visit Hub @ </span>
               <TextField
@@ -39,4 +43,10 @@ class Home extends Component {
   }
 }
 
-export default Home
+const mapStateToProps = (state) => {
+  return {
+    web3: getWeb3(state)
+  }
+}
+
+export default connect(mapStateToProps, null)(Home)

@@ -15,7 +15,7 @@ const mapStateToProps = (state, ownProps) => {
   const web3 = getWeb3(state)
   return {
     hubInstance: getHubViaAddress(state, ownProps.params.address),
-    web3: getWeb3(state),
+    web3: web3,
     userAddress: web3 && web3.eth.accounts[0]
   }
 }

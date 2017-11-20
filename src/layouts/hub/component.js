@@ -69,7 +69,9 @@ class HubPage extends Component {
     })
   }
 
+  
   render() {
+    console.log('version', React.version)
     const {
       hubInstance = {},
       requestMembers,
@@ -96,6 +98,7 @@ class HubPage extends Component {
 
     const handleRegistration = () => {
       console.log('useraddress', userAddress)
+      if (!userAddress) console.error('no address found - need to unlock metamask')
       hubInstance.register(blockcomId, username, {
         from: userAddress,
         gas: 3000000,

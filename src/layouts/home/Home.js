@@ -3,6 +3,8 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { getWeb3 } from '../../components/ethereum/reducer'
 import { TextField, RaisedButton } from 'material-ui'
+import dispatch from '../../util/dispatch'
+import { showNotification } from '../../components/notifications/reducer'
 
 class Home extends Component {
   constructor(props) { 
@@ -19,12 +21,11 @@ class Home extends Component {
     const { hubAddress } = this.state
     const { web3 } = this.props
     const networkId = web3.version.network
-    console.log('id', networkId)
+    if (!networkId === '1') dispatch(showNotification('Main Net detected, this is not production ready - transact at your own risk', 'warning'))
     return (
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-            {networkId !== '5777' && <p style={{ color: 'red'}}>Not using local testrpc, for best results use Ganache</p>}
             <div>
               <span>Visit Hub @ </span>
               <TextField

@@ -71,10 +71,10 @@ class HubPage extends Component {
 
   
   render() {
-    console.log('version', React.version)
     const {
       hubInstance = {},
       requestMembers,
+      showNotification,
       userAddress,
       web3
     } = this.props
@@ -93,13 +93,12 @@ class HubPage extends Component {
       _proposals=[]
     } = hubInstance
     const isMember = _members.includes(userAddress)
-    console.log('rendering hub at address', address)
     if (!address) return <LoadingIcon fill />
-
+    
     const handleRegistration = () => {
       console.log('useraddress', userAddress)
-      if (!userAddress) console.error('no address found - need to unlock metamask')
-      hubInstance.register(blockcomId, username, {
+      if (!userAddress) showNotification('no address found - need to unlock metamask', 'warning')
+      else hubInstance.register(blockcomId, username, {
         from: userAddress,
         gas: 3000000,
         value: web3.toWei(pledge)

@@ -10,6 +10,7 @@ import {
 } from './reducer'
 import { getWeb3 } from '../../components/ethereum/reducer'
 import Hub from './component'
+import { showNotification } from '../../components/notifications/reducer';
 
 const mapStateToProps = (state, ownProps) => {
   const web3 = getWeb3(state)
@@ -24,8 +25,9 @@ const mapDispatchToProps = (dispatch, { params }) => {
   return {
     requestHub: () => dispatch(requestHub(params.address)),
     registerPhone: (number) => dispatch(registerPhone(params.address, number)),
-    requestMembers: () => {console.log('made it'); dispatch(requestMembers(params.address))},
-    requestProposals: () => dispatch(requestProposals(params.address))
+    requestMembers: () => dispatch(requestMembers(params.address)),
+    requestProposals: () => dispatch(requestProposals(params.address)),
+    showNotification: (message, type) => dispatch(showNotification(message,type))
   }
 }
 

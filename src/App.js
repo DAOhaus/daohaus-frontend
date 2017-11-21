@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import squareLogo from '../src/img/brand/logo-square.png'
 import { connect } from 'react-redux'
+import Notification from './components/notifications'
 import { receiveWeb3 } from './components/ethereum/reducer'
 
 // Styles
@@ -12,6 +13,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+      <Notification />
         <nav 
           className="navbar pure-menu pure-menu-horizontal" 
           style={{display: 'flex', justifyContent: 'center', padding: '10px', backgroundColor: 'white'}} >

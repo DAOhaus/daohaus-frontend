@@ -1,12 +1,23 @@
 Frontend
 ===
-Needs contracts in a neighboring repository in order to work.
+These getting started instructions are a work in progress, if you have suggestions on how to make them better please submit a PR :)
 
-Needs contracts to be deployed with truffle.
+## Pre-Deploy
+Be sure you have truffle installed globally, also we make use of the truffle tool Ganache to manage our testrpc instance.
+ - GasLimit to 9000000
+ - Port Number to 7545 (Ganache)
+ - Mnuemonic phrase
+ - MetaMask
+Daohaus-frontend needs Daohaus-contracts as a sibling repository.  Daohaus-contracts also need to be deployed with truffle in order to work.
 
-Run `npm i`
 
-Run `npm start`
+## Deploy
+Ganache - or other testrpc with correct parameters set - should be running
+In `daohaus-contracts` run `truffle migrate --reset`
+Ganache block viewer should display a block that says "Contract Deployed" - copy the address it was deployed to.
+
+Now in `daohaus-frontend` command `npm i` and `npm start` and when the main page comes up, be sure you have installed MetaMask and set it to your custom Ganache rpc -- typically `localhost:7454`
+You should also have loaded the users from when you spun up your original Ganache using the Mnuemonic phrase into MetaMask so that the accounts found have Ether on them in order to use the UI
 
 Todos
 ===

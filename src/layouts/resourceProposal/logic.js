@@ -51,17 +51,17 @@ export default [
   createLogic({
     type: $executeProposal,
     process({ getState, action }, dispatch, done) {
-      const Contract = getLocalContract(getState(), action.address)
-      Contract.castVote().then(status => {
-        dispatch(receiveConstantVariable('status', status, action.address))
-        setTimeout(function() {
-          Contract.getVotes().then(_votes => {
-            dispatch(receiveConstantVariable('votes', _votes, action.address))
-            done()
-          })
-          done()
-        }, 3000);
-      })
+      // const Contract = getLocalContract(getState(), action.address)
+      // Contract.castVote().then(status => {
+      //   dispatch(receiveConstantVariable('status', status, action.address))
+      //   setTimeout(function() {
+      //     Contract.getVotes().then(_votes => {
+      //       dispatch(receiveConstantVariable('votes', _votes, action.address))
+      //       done()
+      //     })
+      //     done()
+      //   }, 3000);
+      // })
     }
   }),
   createLogic({

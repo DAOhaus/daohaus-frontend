@@ -90,14 +90,14 @@ class HubPage extends Component {
     const {
       _members = [],
       address,
+      _availableBalance,
       _proposals=[]
     } = hubInstance
     const isMember = _members.includes(userAddress)
     if (!address) return <LoadingIcon fill />
     
     const handleRegistration = () => {
-      console.log('useraddress', userAddress)
-      if (!userAddress) showNotification('no address found - need to unlock metamask', 'warning')
+      if (!userAddress) showNotification('no address found - needed to unlock metamask', 'warning')
       else hubInstance.register(blockcomId, username, {
         from: userAddress,
         gas: 3000000,
@@ -110,6 +110,7 @@ class HubPage extends Component {
           <div className="pure-u-1-1" style={{ display: 'flex', alignItems: "center", flexDirection: 'column' }}>
             <div style={{width: '320px'}}>
               <h1 style={{textAlign: 'center'}}>Hub {address.substring(0, 5)}//{address.slice(-3)}</h1>
+              <h1 style={{textAlign: 'center'}}>{web3.fromWei(_availableBalance)} Eth</h1>
               <div style={{display:'flex', justifyContent:"center"}}>
               {_members.map((n, idx) =><div key={idx} style={{ display: 'inline', margin: '3px' }}> 
                 <Blockies

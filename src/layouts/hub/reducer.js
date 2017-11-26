@@ -16,6 +16,8 @@ export const $requestProposals = 'REQUEST_PROPOSALS'
 export const requestProposals = makeActionCreator($requestProposals, 'address')
 export const $receiveProposals = 'RECEIVE_PROPOSALS'
 export const receiveProposals = makeActionCreator($receiveProposals, 'address', 'proposals')
+export const $receiveHubVariable = 'RECEIVE_HUB_VARIABLE'
+export const receiveHubVariable = makeActionCreator($receiveHubVariable, 'name', 'value', 'address')
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -49,6 +51,14 @@ export default (state = {}, action) => {
       return {
         ...state,
         [action.address]: { ...state[action.address], validationCode: action.vCode }
+      }
+    case $receiveHubVariable:
+      return {
+        ...state,
+        [action.address]: {
+          ...state[action.address],
+          ['_'+action.name]: (action.value.toString && action.value.constructor.name !== 'Array') ? action.value.toString() : action.value
+        }
       }
     default:
       return state

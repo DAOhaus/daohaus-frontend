@@ -8,6 +8,7 @@ import {
   receiveMembers,
   $requestProposals,
   receiveProposals,
+  receiveHubVariable,
   getHubViaAddress
 } from './reducer'
 import getContract from '../../util/getContract'
@@ -23,6 +24,7 @@ export default [
         const Promises = [
           hubInstance.getMembers().then(members=>dispatch(receiveMembers(action.address,members))),
           hubInstance.getProposals().then(proposals=>dispatch(receiveProposals(action.address,proposals))),
+          hubInstance.availableBalance().then(_balance=>dispatch(receiveHubVariable('availableBalance',_balance.toString(), action.address)))
         ]
         Bluebird.all(Promises).then(done)
       }).catch(done)
@@ -73,5 +75,5 @@ export default [
       //   done()
       // });
     }
-  }),
+  })
 ]

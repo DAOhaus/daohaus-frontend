@@ -27,6 +27,7 @@ Todos
 - [ ] add data points like the PVR, the proposal length, etc...
 - [ ] factor in block times.  Right now instant, I'll need to keep polling when I receive tx hash
 - [ ] Refactor tests that are meant to "throw" to follow pattern that won't break ganache - http://truffleframework.com/tutorials/testing-for-throws-in-solidity-tests
+- [ ] Refactor Hub & ResourceProposal reducers / logic to have shared balance, variable functions
 - [ ] Allow switching between accounts on testrpc, or just hookup metamask
 - [ ] remove "deadline" and replace it with a hub contract variable
 - [ ] add in logos, change colors to match branding

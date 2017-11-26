@@ -21,7 +21,7 @@ class Home extends Component {
     const { hubAddress } = this.state
     const { web3 } = this.props
     const networkId = web3.version.network
-    if (!networkId === '1') dispatch(showNotification('Main Net detected, this is not production ready - transact at your own risk', 'warning'))
+    if (networkId === '5777') dispatch(showNotification('MetaMask not connected to Ganache with networkId 5777 - transact at your own risk', 'warning'))
     return (
       <main className="container">
         <div className="pure-g">

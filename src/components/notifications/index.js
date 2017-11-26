@@ -6,14 +6,15 @@ import styled from 'styled-components'
 const NotificationBar = styled('div')`
   display: ${({notification}) => notification.visible ? 'flex' : 'none'};
   background-color: ${({notification}) => {
-    const type = notification.type
-    if (type === 'error') return 'red'
-    else if (type === 'warning') return 'orange'
-    else if (type === 'success') return 'green'
+    const classification = notification.classification
+    if (classification === 'error') return 'red'
+    else if (classification === 'warning') return 'orange'
+    else if (classification === 'success') return 'green'
     }
   };
   color: white;
   width: 100%;
+  padding: 10px;
   height: 40px;
   justify-content: center;
   align-items: center;

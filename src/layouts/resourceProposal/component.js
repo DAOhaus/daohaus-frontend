@@ -35,7 +35,7 @@ class ResourceProposal extends Component {
       const watchVotes = this.props.resourceProposalInstance.LogVoteCast({},{fromBlock:'latest'});
       this.setState({ watcher: true })
       watchVotes.watch((error, result) => {
-        console.log("HEE:LLLLLLLLLLOOOOO", result);
+        console.log("watch initiated", result);
         if(result){
           this.props.requestVotes();
         }
@@ -68,7 +68,6 @@ class ResourceProposal extends Component {
 
     if (!address) return <LoadingIcon fill />
     const isChairman = userAddress === _chairman
-    console.log('instance:', resourceProposalInstance)
     return(
       <main className="container">
         <div className="pure-g">

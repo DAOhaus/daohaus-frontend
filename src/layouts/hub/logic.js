@@ -11,6 +11,8 @@ import {
   receiveHubVariable,
   getHubViaAddress
 } from './reducer'
+import getBalancePromise from '../../util/getBalancePromise'
+import { getWeb3 } from '../../components/ethereum/reducer'
 import getContract from '../../util/getContract'
 import HubJson from '../../../../daohaus-contracts/build/contracts/Hub.json'
 
@@ -19,12 +21,14 @@ export default [
     type: $requestHub,
     process({ getState, action }, dispatch, done) {
       const Hub = getContract(HubJson)
+      const web3 = getWeb3(getState())
       Hub.at(action.address).then(hubInstance => {
         dispatch(receiveHub(hubInstance))
         const Promises = [
           hubInstance.getMembers().then(members=>dispatch(receiveMembers(action.address,members))),
           hubInstance.getProposals().then(proposals=>dispatch(receiveProposals(action.address,proposals))),
-          hubInstance.availableBalance().then(_balance=>dispatch(receiveHubVariable('availableBalance',_balance.toString(), action.address)))
+          hubInstance.availableBalance().then(_available=>dispatch(receiveHubVariable('availableBalance',_available.toString(), action.address))),
+          getBalancePromise(web3.eth, hubInstance.address).then(_balance=>dispatch(receiveHubVariable('balance',_balance.toString(), action.address)))
         ]
         Bluebird.all(Promises).then(done)
       }).catch(done)

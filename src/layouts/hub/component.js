@@ -90,6 +90,7 @@ class HubPage extends Component {
     const {
       _members = [],
       address,
+      _balance,
       _availableBalance,
       _proposals=[]
     } = hubInstance
@@ -110,7 +111,7 @@ class HubPage extends Component {
           <div className="pure-u-1-1" style={{ display: 'flex', alignItems: "center", flexDirection: 'column' }}>
             <div style={{width: '320px'}}>
               <h1 style={{textAlign: 'center'}}>Hub {address.substring(0, 5)}//{address.slice(-3)}</h1>
-              <h1 style={{textAlign: 'center'}}>{web3.fromWei(_availableBalance)} Eth</h1>
+              <h2 style={{textAlign: 'center'}}>{web3.fromWei(_availableBalance)} of {web3.fromWei(_balance)} Eth Available</h2>
               <div style={{display:'flex', justifyContent:"center"}}>
               {_members.map((n, idx) =><div key={idx} style={{ display: 'inline', margin: '3px' }}> 
                 <Blockies

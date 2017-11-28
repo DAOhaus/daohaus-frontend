@@ -25,6 +25,8 @@ Todos
 - [x] Retrieval of "proposalCost" variable from resourceProposal contract not working
 - [x] figure out why it takes so long to load
 - [ ] add data points like the PVR, the proposal length, etc...
+- [ ] check to make sure user isn't already member of hub before allowing to register
+- [ ] check to make sure resource proposal isn't finished before allowing to vote -- currently can vote on finished proposals
 - [ ] factor in block times.  Right now instant, I'll need to keep polling when I receive tx hash
 - [ ] Refactor tests that are meant to "throw" to follow pattern that won't break ganache - http://truffleframework.com/tutorials/testing-for-throws-in-solidity-tests
 - [ ] Refactor Hub & ResourceProposal reducers / logic to have shared balance, variable functions

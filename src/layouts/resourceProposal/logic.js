@@ -51,24 +51,21 @@ export default [
   createLogic({
     type: $executeProposal,
     process({ getState, action }, dispatch, done) {
-      // const Contract = getLocalContract(getState(), action.address)
-      // Contract.castVote().then(status => {
-      //   dispatch(receiveConstantVariable('status', status, action.address))
-      //   setTimeout(function() {
-      //     Contract.getVotes().then(_votes => {
-      //       dispatch(receiveConstantVariable('votes', _votes, action.address))
-      //       done()
-      //     })
-      //     done()
-      //   }, 3000);
-      // })
+      console.log('execute called', action)
+      const Contract = getLocalContract(getState(), action.address)
+      Contract.sendToHub({ from: getAccount(getState()),gas: 4000000}).then(status => {
+        console.log('sent to hub with response', status)
+        done()
+      }).catch((res)=>{
+        console.log('catch', res)
+      })
     }
   }),
   createLogic({
     type: $castVote,
     process({ getState, action }, dispatch, done) {
       const Contract = getLocalContract(getState(), action.address)
-      Contract.castVote(action.vote, { from: getAccount(getState())})
+      Contract.castVote(action.vote, { from: getAccount(getState()), gas: 4000000})
         .then(res => {
           console.log('cast res:', res)
           done()

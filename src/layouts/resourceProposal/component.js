@@ -34,7 +34,7 @@ class ResourceProposal extends Component {
       console.log('adding watcher');
       const watchVotes = this.props.resourceProposalInstance.LogVoteCast({},{fromBlock:'latest'});
       this.setState({ watcher: true })
-      watchVotes.watch(function(error, result){
+      watchVotes.watch((error, result) => {
         console.log("HEE:LLLLLLLLLLOOOOO", result);
         if(result){
           this.props.requestVotes();
@@ -81,7 +81,7 @@ class ResourceProposal extends Component {
                 <StyledItem> <span>Proposal Cost:</span><span> {web3.fromWei(_proposalCost, 'ether')} ETH</span></StyledItem>
                 <StyledItem> <span>Chairman Fee:</span><span> {web3.fromWei(_chairmanFee, 'ether')} ETH</span></StyledItem>
                 <StyledItem> <span>Chairman:</span><span> {FirstLast(_chairman)}</span></StyledItem>
-                <StyledItem> <span>Blocks Until Close:</span><span> {_deadline}</span></StyledItem>
+                <StyledItem> <span>Closes on Block #:</span><span> {_deadline}</span></StyledItem>
                 <StyledItem> <span>Parent Hub:</span><Link to={`/hub/${_owner}`} > {FirstLast(_owner)}</Link></StyledItem>
               </CardText>
               {_votes.length &&

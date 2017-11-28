@@ -30,7 +30,7 @@ class HubPage extends Component {
       pledge: '',
       chairmanAddress: '',
       fees: '',
-      blocks: '',
+      blocks: 1,
       cost: '',
       text: '',
       validationCode: '',
@@ -50,11 +50,11 @@ class HubPage extends Component {
   handleBlockcomChange = (e) => this.setState({ blockcomId: e.target.value })
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })
   handleCreate = () => { // be careful to add enough gas here
-    console.log('params sending to contract',this.props.userAddress,
-    this.props.web3.toWei(this.state.fees),
-    this.state.blocks,
-    this.props.web3.toWei(this.state.cost),
-    this.state.text, )
+    // console.log('params sending to contract',this.props.userAddress,
+    // this.props.web3.toWei(this.state.fees),
+    // this.state.blocks,
+    // this.props.web3.toWei(this.state.cost),
+    // this.state.text, )
     this.props.hubInstance.createResourceProposal(
       this.props.userAddress,
       this.props.web3.toWei(this.state.fees),
@@ -95,9 +95,9 @@ class HubPage extends Component {
     } = hubInstance
     const isMember = _members.includes(userAddress)
     if (!address) return <LoadingIcon fill />
-    
+
     const handleRegistration = () => {
-      if (!userAddress) showNotification('no address found - needed to unlock metamask', 'warning')
+      if (!userAddress) showNotification('no address found - needed to unlock metamask and refresh page', 'warning')
       else hubInstance.register(blockcomId, username, {
         from: userAddress,
         gas: 3000000,
@@ -204,7 +204,8 @@ class HubPage extends Component {
                   onClick={() => this.setState({createProposalOpen: false })}
                   fullWidth={true} >Cancel </FlatButton>
                   </CardActions>
-              </Card>}
+              </Card>
+              }
             </div>
           </div>
         </div>

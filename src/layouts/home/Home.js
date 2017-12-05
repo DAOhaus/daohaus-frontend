@@ -11,14 +11,16 @@ class Home extends Component {
     super(props) 
     const initialState = { 
       hubAddress: '', 
+      dictatorHubAddress: '', 
     } 
     this.state = initialState 
   } 
  
   handleAddressChange = (e) => this.setState({hubAddress: e.target.value}) 
+  handleDictatorAddressChange = (e) => this.setState({dictatorHubAddress: e.target.value}) 
 
   render() {
-    const { hubAddress } = this.state
+    const { hubAddress, dictatorHubAddress } = this.state
     const { web3 } = this.props
     const networkId = web3.version.network
     if (networkId !== '5777') dispatch(showNotification(`MetaMask not connected to Ganache with networkId 5777, instead at ${networkId} - transact at your own risk`, 'warning'))
@@ -35,6 +37,19 @@ class Home extends Component {
                 onChange={this.handleAddressChange} />
             </div>
             <Link to={`/hub/${hubAddress}`}>
+              <RaisedButton primary style={{ color: 'white' }}> Visit Hub </RaisedButton>
+            </Link>
+          </div>
+          <div className="pure-u-1-1" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column'  }}>
+            <div>
+              <span>Visit Dictator Hub @ </span>
+              <TextField
+                name="hub_address"
+                placeholder="0xdd90c..."
+                value={dictatorHubAddress}
+                onChange={this.handleDictatorAddressChange} />
+            </div>
+            <Link to={`/dictatorHub/${dictatorHubAddress}`}>
               <RaisedButton primary style={{ color: 'white' }}> Visit Hub </RaisedButton>
             </Link>
           </div>

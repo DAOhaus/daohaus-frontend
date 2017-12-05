@@ -11,6 +11,7 @@ import App from './App'
 import Home from './layouts/home/Home'
 import ResourceProposal from './layouts/resourceProposal'
 import Hub from './layouts/hub'
+import DictatorHub from './layouts/dictatorHub'
 import Truffle from './layouts/truffle'
 import Dashboard from './layouts/dashboard/Dashboard'
 import Profile from './user/layouts/profile/Profile'
@@ -28,6 +29,7 @@ ReactDOM.render((
           <IndexRoute component={Home} />
           <Route path="truffle" component={Truffle} />
           <Route path="/hub/:address" component={Hub} />
+          <Route path="/dictatorHub/:address" component={DictatorHub} />
           <Route path="/resourceProposal/:address" component={ResourceProposal} />
           <Route path="dashboard" component={UserIsAuthenticated(Dashboard)} />
           <Route path="profile" component={UserIsAuthenticated(Profile)} />

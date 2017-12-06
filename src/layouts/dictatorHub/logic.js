@@ -20,12 +20,14 @@ export default [
   createLogic({
     type: $requestHub,
     process({ getState, action }, dispatch, done) {
+      console.log('here made it 4', )
       const Hub = getContract(HubJson)
       const web3 = getWeb3(getState())
       Hub.at(action.address).then(hubInstance => {
+        console.log('dicator hub:', hubInstance)
         dispatch(receiveHub(hubInstance))
         const Promises = [
-          hubInstance.getMembers().then(members=>dispatch(receiveMembers(action.address,members))),
+          hubInstance.getMembers().then(members=> dispatch(receiveMembers(action.address,members))),
           hubInstance.getProposals().then(proposals=>dispatch(receiveProposals(action.address,proposals))),
           hubInstance.owner().then(_owner=> dispatch(receiveHubVariable('owner',_owner, action.address))),
           hubInstance.availableBalance().then(_available=>dispatch(receiveHubVariable('availableBalance',_available.toString(), action.address))),

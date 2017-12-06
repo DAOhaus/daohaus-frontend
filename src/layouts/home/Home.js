@@ -16,9 +16,13 @@ class Home extends Component {
     this.state = initialState 
   } 
  
-  handleAddressChange = (e) => this.setState({hubAddress: e.target.value}) 
-  handleDictatorAddressChange = (e) => this.setState({dictatorHubAddress: e.target.value}) 
-
+  
+  handleAddressChange = (e) => {
+    this.setState({hubAddress: e.target.value}) 
+  }
+  handleDictatorAddressChange = (e) => {
+    this.setState({dictatorHubAddress: e.target.value}) 
+  }
   render() {
     const { hubAddress, dictatorHubAddress } = this.state
     const { web3 } = this.props
@@ -44,7 +48,7 @@ class Home extends Component {
             <div>
               <span>Visit Dictator Hub @ </span>
               <TextField
-                name="hub_address"
+                name="dictator_hub_address"
                 placeholder="0xdd90c..."
                 value={dictatorHubAddress}
                 onChange={this.handleDictatorAddressChange} />

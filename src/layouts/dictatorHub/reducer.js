@@ -1,22 +1,22 @@
 import makeActionCreator from '../../util/makeActionCreator'
 
-export const $requestHub = 'REQUEST_HUB'
+export const $requestHub = 'REQUEST_DICTATOR_HUB'
 export const requestHub = makeActionCreator($requestHub, 'address')
-export const $receiveHub = 'RECEIVE_HUB'
+export const $receiveHub = 'RECEIVE_DICTATOR_HUB'
 export const receiveHub = makeActionCreator($receiveHub, 'hub')
-export const $requestMembers = 'REQUEST_MEMBERS'
+export const $requestMembers = 'REQUEST_DICTATOR_HUB_MEMBERS'
 export const requestMembers = makeActionCreator($requestMembers, 'address')
-export const $receiveMembers = 'RECEIVE_MEMBERS'
+export const $receiveMembers = 'RECEIVE_DICTATOR_HUB_MEMBERS'
 export const receiveMembers = makeActionCreator($receiveMembers, 'address', 'members')
-export const $registerPhone = 'REGISTER_PHONE'
+export const $registerPhone = 'REGISTER_DICTATOR_HUB_PHONE'
 export const registerPhone = makeActionCreator($registerPhone, 'address', 'number')
-export const $receiveValidationCode = 'RECEIVE_VALIDATION_CODE'
+export const $receiveValidationCode = 'RECEIVE_DICTATOR_HUB_VALIDATION_CODE'
 export const receiveValidationCode = makeActionCreator($receiveValidationCode, 'address', 'vCode')
-export const $requestProposals = 'REQUEST_PROPOSALS'
+export const $requestProposals = 'REQUEST_DICTATOR_HUB_PROPOSALS'
 export const requestProposals = makeActionCreator($requestProposals, 'address')
-export const $receiveProposals = 'RECEIVE_PROPOSALS'
+export const $receiveProposals = 'RECEIVE_DICTATOR_HUB_PROPOSALS'
 export const receiveProposals = makeActionCreator($receiveProposals, 'address', 'proposals')
-export const $receiveHubVariable = 'RECEIVE_HUB_VARIABLE'
+export const $receiveHubVariable = 'RECEIVE_DICTATOR_HUB_VARIABLE'
 export const receiveHubVariable = makeActionCreator($receiveHubVariable, 'name', 'value', 'address')
 
 export default (state = {}, action) => {

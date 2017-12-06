@@ -53,13 +53,12 @@ class HubPage extends Component {
   handleBlockcomChange = (e) => this.setState({ blockcomId: e.target.value })
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })
   handlePledge = () => {
-    console.log('hubInstance', this.props.web3.eth.sendTransaction)
-    this.props.web3.eth.sendTransaction({ 
+    // this.props.web3.eth.sendTransaction({ 
+    this.props.hubInstance.anonymousFund({
       from: this.props.userAddress, 
-      to: this.props.hubInstance.address, 
       value: this.props.web3.toWei(this.state.pledge, 'ether'), 
-      gas: 3000000}, (res)=>{
-      console.log('return', res)
+      gas: 3000000}).then((res)=>{
+      console.log('return',).then()
     })
 
     // this.props.hubInstance.send(this.props.web3.fromWei(this.state.pledge), {from: this.props.userAddress, gas: 3000000 })
@@ -113,13 +112,14 @@ class HubPage extends Component {
       _proposals=[]
     } = hubInstance
     const isMember = _members.includes(userAddress)
-    const isDictator = _owner === userAddress
-    console.log('instance', hubInstance)
+    // const isDictator = _owner === userAddress
+    const isDictator = true
+    console.log('owner address:', _owner)
     if (!address) return <LoadingIcon fill />
 
     const handleRegistration = () => {
       if (!userAddress) showNotification('no address found - needed to unlock metamask and refresh page', 'warning')
-      else hubInstance.register(newMemberAddress, weight, blockcomId, username, {
+      else hubInstance.dictatorRegister(newMemberAddress, weight, blockcomId, username, {
         from: userAddress,
         gas: 3000000,
         value: web3.toWei(pledge)

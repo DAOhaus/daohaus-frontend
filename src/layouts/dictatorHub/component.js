@@ -53,12 +53,11 @@ class HubPage extends Component {
   handleBlockcomChange = (e) => this.setState({ blockcomId: e.target.value })
   handleValidationCodeChange = (e) => this.setState({ validationCode: e.target.value })
   handlePledge = () => {
-    // this.props.web3.eth.sendTransaction({ 
     this.props.hubInstance.anonymousFund({
       from: this.props.userAddress, 
       value: this.props.web3.toWei(this.state.pledge, 'ether'), 
       gas: 3000000}).then((res)=>{
-      console.log('return',).then()
+      console.log('return:',res)
     })
 
     // this.props.hubInstance.send(this.props.web3.fromWei(this.state.pledge), {from: this.props.userAddress, gas: 3000000 })

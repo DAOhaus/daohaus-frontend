@@ -6,7 +6,7 @@ These getting started instructions are a work in progress, if you have suggestio
 Be sure you have [Truffle](http://truffleframework.com/) installed globally, also we make use of the truffle tool [Ganache](http://truffleframework.com/ganache/) to manage our testrpc instance and [MetaMask](https://metamask.io/) to sign transactions.  At this point go ahead and open and start Ganache.
  - Be sure to have Ganache gas limit to 9000000
  - Port Number to 7545 (Ganache Default)
- - Use the same Mnuemonic phrase each time you start.  The reason for this is because Ganache creates users, and you must import these acounts into MetaMask in order to have accounts with Ether in order to transact and interact with our contracts.  If you haven't done this yet, please do so now.  Find the "Users" tab of Ganache, copy the private key, and follow along with [this guide](https://support.metamask.io/kb/article/7-importing-accounts)
+ - Use the same Mnuemonic phrase each time you start.  The reason for this is because Ganache creates users, and you must import these acounts into MetaMask in order to have accounts with Ether in order to transact and interact with our contracts.  If you haven't done this yet, please do so now.  Find the "Users" tab of Ganache, copy the private key, and follow along with [this guide](https://support.metamask.io/kb/article/19-importing-accounts)
 
 Now, Daohaus-frontend needs Daohaus-contracts as a sibling repository.  Daohaus-contracts also needs to be deployed with truffle in order to work.  We'll cover this in the next section.
 
